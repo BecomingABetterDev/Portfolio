@@ -151,10 +151,11 @@ JWT_SECRET=your_secure_hexadecimal_jwt_secret
 
 ```
 
-Provision the structural administrator entry record into MongoDB and start up your active development process environment:
+Provision the structural administrator entry record into MongoDB and start up your active development process environment, and adds the projects to the database for the admin to edit them:
 
 ```bash
-node seedAdmin.js
+cd backend
+npm run seed
 npm run dev
 
 ```
