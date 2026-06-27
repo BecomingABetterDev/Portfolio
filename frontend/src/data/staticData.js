@@ -7,7 +7,7 @@ export const OWNER = {
     github: "https://github.com/",
     linkedin: "https://linkedin.com/",
     heroStatement: [
-        "Production-grade systems built on constrained hardware — not tutorial clones.",
+        "Building high-performance web applications with absolute state control.",
         "The work ranges from offline-first educational platforms that survive full network loss, to triage engines that run clinical algorithms without touching a server.",
         "Every project starts with a real constraint and ends with shipped software.",
     ],
@@ -18,59 +18,86 @@ export const CERTIFICATIONS = [{
         issuer: "Udacity",
         title: "Introduction to Web Development",
         verified: true,
+        verificationUrl: "https://your-certificate-link-or-screenshot-url.com",
     },
     {
         id: "cert-2",
         issuer: "Udacity",
         title: "Artificial Intelligence Fundamentals",
         verified: true,
+        verificationUrl: "https://your-certificate-link-or-screenshot-url.com",
     },
     {
         id: "cert-3",
         issuer: "Anthropic (Skilljar)",
         title: "AI Fluency: Framework & Foundations",
         verified: true,
+        verificationUrl: "https://your-certificate-link-or-screenshot-url.com",
+    },
+    {
+        id: "cert-4",
+        title: "Rapid Prototype & High-Velocity Deployment",
+        issuer: "Hackathon Champion / Participant",
+        date: "2026",
+        verificationUrl: "https://your-hackathon-project-link-or-image.com",
+    },
+    {
+        id: "cert-5",
+        title: "Pro-Bono Live Production Deployment",
+        issuer: "Charity System Recognition",
+        date: "2026",
+        verificationUrl: "https://the-live-charity-website-link.com",
     },
 ];
 
+// ─── REVOLUTIONIZED TECH STACK MATRIX DATA ───
 export const SKILLS = [{
-        category: "Frontend",
-        items: [
-            "React 18",
-            "Tailwind CSS",
-            "Vite",
-            "Vanilla JS (ES6+)",
-            "HTML5/CSS3",
-            "Service Workers",
-            "IndexedDB",
+        category: "Frontend Architecture",
+        items: [{
+                name: "React",
+                iconPath: "M24.4 13.1c0-2.8-2-5.1-4.7-5.5 0-.3.1-.6.1-.9 0-3.7-3-6.7-6.7-6.7S6.4 3 6.4 6.7c0 .3 0 .6.1.9-2.7.4-4.7 2.7-4.7 5.5 0 2.4 1.5 4.5 3.7 5.2-.6 1.1-1 2.4-1 3.7 0 4.1 3.4 7.5 7.5 7.5s7.5-3.4 7.5-7.5c0-1.3-.3-2.6-1-3.7 2.2-.7 3.9-2.8 3.9-5.2zm-11.3 6.6c-4.1 0-7.4-3.3-7.4-7.4s3.3-7.4 7.4-7.4 7.4 3.3 7.4 7.4-3.3 7.4-7.4 7.4z",
+            }, // React abstract paths simplified for flawless token scaling
+            {
+                name: "Tailwind CSS",
+                iconPath: "M12 18.5c-3.1 0-5.5-1.1-7.3-3.2 1.8-.2 3.2-.9 4.1-2.1-2-.4-3.4-1.5-4-3.4.6.1 1.1.1 1.6 0-2.1-.4-3.6-2.1-3.6-4.2.6.3 1.3.5 2 .5-2-1.3-2.6-3.9-1.3-5.9 2.2 2.7 5.6 4.5 9.4 4.7-.2-.8-.3-1.6-.3-2.4 0-2.4 1.9-4.3 4.3-4.3 1.2 0 2.4.5 3.2 1.3 1-.2 1.9-.6 2.8-1.1-.3 1-1 1.9-1.9 2.4 1-.1 1.9-.4 2.7-.7-.6.9-1.4 1.7-2.3 2.3 0 9.3-7.1 16.2-16.3 16.2z",
+            },
+            {
+                name: "Vite",
+                iconPath: "M19.9 2.3L12 17.5 4.1 2.3h15.8zM12 21.7L3 4.3h18l-9 17.4z",
+            },
+            {
+                name: "Service Workers",
+                iconPath: "M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5",
+            },
+            {
+                name: "IndexedDB",
+                iconPath: "M12 2C6.5 2 2 4.2 2 7v10c0 2.8 4.5 5 10 5s10-2.2 10-5V7c0-2.8-4.5-5-10-5zm0 3c4.1 0 7.5 1.4 7.5 3S16.1 11 12 11 4.5 9.6 4.5 8 7.9 5 12 5z",
+            },
         ],
     },
     {
-        category: "Backend",
-        items: [
-            "Node.js",
-            "Express.js",
-            "MongoDB",
-            "Mongoose ODM",
-            "JWT Auth",
-            "REST API Design",
+        category: "Backend & Heavy Systems",
+        items: [{
+                name: "Node.js",
+                iconPath: "M12 2L2 7.5v11L12 22l10-5.5v-11L12 2zM4 8.5l7 3.8v7.4l-7-3.8V8.5zm16 7.4l-7 3.8v-7.4l7-3.8v7.4z",
+            },
+            {
+                name: "Express",
+                iconPath: "M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-3.3 0-6-2.7-6-6s2.7-6 6-6 6 2.7 6 6-2.7 6-6 6z",
+            },
+            {
+                name: "MongoDB",
+                iconPath: "M12 2s-5 4.5-5 9.5c0 3 2.2 5.5 5 5.5s5-2.5 5-5.5C17 6.5 12 2 12 2z",
+            },
         ],
     },
     {
-        category: "Tools & Workflow",
-        items: ["VS Code", "Git", "Postman", "Chrome DevTools", "Vite", "npm"],
-    },
-    {
-        category: "Concepts",
+        category: "Design Architecture",
         items: [
-            "Offline-First Architecture",
-            "Client-Side Algorithm Design",
-            "Multi-User Auth Systems",
-            "Browser Storage APIs",
+            { name: "Figma", isFigma: true }, // Handled with dedicated vector mapping directly in code for geometric accuracy
         ],
     },
 ];
-
 export const STATIC_PROJECTS = [{
         _id: "static-1",
         name: "EthioStudy",

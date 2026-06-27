@@ -3,7 +3,9 @@
 @tailwind utilities;
 
 /* ─── Base resets ─── */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -15,33 +17,64 @@ html {
 
 body {
   background-color: #111827; /* gray-900 */
-  color: #f9fafb;             /* near-white */
-  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  color: #f9fafb; /* near-white */
+  font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 /* ─── Typography ─── */
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Space Grotesk', Inter, sans-serif;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Space Grotesk", Inter, sans-serif;
   line-height: 1.2;
 }
 
-code, .font-mono, .tech-tag {
-  font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+code,
+.font-mono,
+.tech-tag {
+  font-family: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
 }
 
 /* ─── Accent color variables ─── */
 :root {
-  --accent: #06b6d4;         /* cyan-500 */
-  --accent-dark: #0891b2;    /* cyan-600 */
-  --accent-light: #67e8f9;   /* cyan-300 */
-  --bg-base: #111827;        /* gray-900 */
-  --bg-surface: #1f2937;     /* gray-800 */
+  --accent: #06b6d4; /* cyan-500 */
+  --accent-dark: #0891b2; /* cyan-600 */
+  --accent-light: #67e8f9; /* cyan-300 */
+  --bg-base: #111827; /* gray-900 */
+  --bg-surface: #1f2937; /* gray-800 */
   --text-primary: #f9fafb;
-  --text-body: #d1d5db;      /* gray-300 */
-  --text-meta: #6b7280;      /* gray-500 */
+  --text-body: #d1d5db; /* gray-300 */
+  --text-meta: #6b7280; /* gray-500 */
+}
+
+/* ─── MATRIX ENGINE HARDWARE ACCELERATION ─── */
+.reveal-trigger {
+  will-change: transform, opacity;
+}
+
+.matrix-visible {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+.matrix-node {
+  opacity: 0;
+  transform: translateY(12px);
+  will-change: transform, opacity;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.matrix-visible .matrix-node {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* ─── View transition animations ─── */
@@ -85,8 +118,10 @@ code, .font-mono, .tech-tag {
 
 /* ─── Grid background for hero ─── */
 .grid-bg {
-  background-image:
-    linear-gradient(rgba(6, 182, 212, 0.04) 1px, transparent 1px),
+  background-image: linear-gradient(
+      rgba(6, 182, 212, 0.04) 1px,
+      transparent 1px
+    ),
     linear-gradient(90deg, rgba(6, 182, 212, 0.04) 1px, transparent 1px);
   background-size: 48px 48px;
 }
@@ -114,7 +149,8 @@ code, .font-mono, .tech-tag {
 
 /* ─── Card hover lift ─── */
 .card-lift {
-  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  transition: transform 0.25s ease, border-color 0.25s ease,
+    box-shadow 0.25s ease;
 }
 .card-lift:hover {
   transform: translateY(-4px);
@@ -129,13 +165,17 @@ code, .font-mono, .tech-tag {
 }
 
 /* ─── Input styling ─── */
-input, textarea, select {
+input,
+textarea,
+select {
   background: #1f2937;
   border: 1px solid #374151;
   color: #f9fafb;
   transition: border-color 0.2s ease;
 }
-input:focus, textarea:focus, select:focus {
+input:focus,
+textarea:focus,
+select:focus {
   outline: none;
   border-color: #06b6d4;
   box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.2);
