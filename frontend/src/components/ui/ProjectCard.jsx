@@ -69,7 +69,7 @@ export default function ProjectCard({ project, expanded = false }) {
             <img
               src={project.imageUrl}
               alt={`${project.name} environment matrix preview`}
-              className="w-full h-full object-cover object-top hover:scale-[1.02] transition-transform duration-500"
+              className="w-full h-1/5 object-cover object-top hover:scale-[1.02] transition-transform duration-500"
               loading="lazy"
             />
           </div>

@@ -6,8 +6,8 @@ export const OWNER = {
     email: "eyobdesalegn.dev@gmail.com",
     github: "https://github.com/",
     linkedin: "https://linkedin.com/",
+    subtitle: "Building high-performance web applications with absolute state control.",
     heroStatement: [
-        "Building high-performance web applications with absolute state control.",
         "The work ranges from offline-first educational platforms that survive full network loss, to triage engines that run clinical algorithms without touching a server.",
         "Every project starts with a real constraint and ends with shipped software.",
     ],
