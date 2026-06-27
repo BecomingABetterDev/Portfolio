@@ -40,10 +40,7 @@ export default function ContactView() {
   };
 
   return (
-    <div
-      className="view-enter"
-      style={{ paddingTop: "80px" }}
-    >
+    <div className="view-enter">
       <div className="max-w-6xl mx-auto px-6 py-16">
         <SectionHeading
           label="03 / Contact"

@@ -1,120 +1,121 @@
-import React, { useState, useEffect } from 'react'
-
-const NAV_LINKS = [
-  { label: 'Home', view: 'home' },
-  { label: 'Projects', view: 'projects' },
-  { label: 'Contact', view: 'contact' },
-]
+import React, { useState } from "react";
+import { FiMenu, FiX, FiTerminal, FiLayers } from "react-icons/fi";
 
 export default function Navbar({ currentView, setCurrentView }) {
-  const [scrolled, setScrolled] = useState(false)
-  const [menuOpen, setMenuOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24)
-    window.addEventListener('scroll', onScroll)
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+  const navItems = [
+    { id: "home", label: "Home", shortcut: "01" },
+    { id: "projects", label: "Projects", shortcut: "02" },
+    { id: "contact", label: "Contact", shortcut: "03" },
+  ];
 
-  const navigate = (view) => {
-    setCurrentView(view)
-    setMenuOpen(false)
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
+  const handleNavigate = (viewId) => {
+    setCurrentView(viewId);
+    setIsOpen(false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? 'bg-gray-900 bg-opacity-95 border-b border-gray-800 shadow-lg'
-          : 'bg-gray-900 bg-opacity-85'
-      }`}
-      style={{ backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' }}
-    >
-      <nav className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        {/* Logo */}
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-gray-950/50 backdrop-blur-md border-b border-gray-900/80 transition-all duration-300">
+      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+        {/* Brand Architecture Monogram */}
         <button
-          onClick={() => navigate('home')}
-          className="flex items-center gap-2 group focus:outline-none"
-          aria-label="Go to home"
+          onClick={() => handleNavigate("home")}
+          className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-white group cursor-pointer focus:outline-none"
         >
-          <span className="w-7 h-7 rounded border border-cyan-500 flex items-center justify-center">
-            <span className="text-cyan-400 font-mono text-sm font-semibold">E</span>
-          </span>
-          <span
-            className="font-display font-semibold text-white text-base tracking-tight group-hover:text-cyan-400 transition-colors duration-200"
-            style={{ fontFamily: 'Space Grotesk, Inter, sans-serif' }}
-          >
-            Eyob Desalegn
+          <div className="p-1.5 bg-gray-900 border border-gray-800 rounded group-hover:border-cyan-500/50 transition-colors">
+            <FiTerminal
+              className="text-cyan-400 group-hover:animate-pulse"
+              size={12}
+            />
+          </div>
+          <span className="font-bold tracking-tight text-sm">
+            EYOB
+            <span className="text-cyan-400 font-mono font-normal">.SYS</span>
           </span>
         </button>
 
-        {/* Desktop nav */}
-        <ul className="hidden md:flex items-center gap-8">
-          {NAV_LINKS.map(({ label, view }) => (
-            <li key={view}>
+        {/* Desktop Navigation Links */}
+        <div className="hidden md:flex items-center gap-8">
+          {navItems.map((item) => {
+            const isActive = currentView === item.id;
+            return (
               <button
-                onClick={() => navigate(view)}
-                className={`relative text-sm font-medium transition-colors duration-200 focus:outline-none pb-1 ${
-                  currentView === view
-                    ? 'text-cyan-400'
-                    : 'text-gray-400 hover:text-white'
+                key={item.id}
+                onClick={() => handleNavigate(item.id)}
+                className="relative py-2 font-mono text-xs uppercase tracking-wider transition-colors cursor-pointer focus:outline-none flex items-baseline gap-1"
+              >
+                <span className="text-[9px] text-gray-600 font-normal">
+                  {item.shortcut}
+                </span>
+                <span
+                  className={
+                    isActive
+                      ? "text-cyan-400 font-medium"
+                      : "text-gray-400 hover:text-white"
+                  }
+                >
+                  {item.label}
+                </span>
+
+                {/* Active Underline Highlight */}
+                {isActive && (
+                  <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-cyan-500 shadow-[0_1px_6px_rgba(34,211,238,0.4)] rounded-full" />
+                )}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Mobile Menu Action Trigger */}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="md:hidden p-2 text-gray-400 hover:text-white focus:outline-none cursor-pointer rounded bg-gray-900/40 border border-gray-800"
+          aria-label="Toggle Navigation Control"
+        >
+          {isOpen ? <FiX size={16} /> : <FiMenu size={16} />}
+        </button>
+      </div>
+
+      {/* Mobile Drawer Overlay Layer */}
+      <div
+        className={`fixed top-16 left-0 right-0 bg-gray-950/95 border-b border-gray-900 backdrop-blur-lg md:hidden transition-all duration-300 transform origin-top ${
+          isOpen
+            ? "scale-y-100 opacity-100 pointer-events-auto"
+            : "scale-y-0 opacity-0 pointer-events-none"
+        }`}
+      >
+        <div className="px-6 py-6 space-y-4 flex flex-col text-left">
+          {navItems.map((item) => {
+            const isActive = currentView === item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={() => handleNavigate(item.id)}
+                className={`w-full py-3 px-4 rounded-lg font-mono text-xs uppercase tracking-widest text-left flex items-center justify-between transition-all ${
+                  isActive
+                    ? "bg-cyan-950/20 border border-cyan-900/50 text-cyan-400"
+                    : "bg-gray-900/20 border border-gray-900 text-gray-400 hover:text-white hover:bg-gray-900/40"
                 }`}
               >
-                {label}
-                <span
-                  className={`absolute bottom-0 left-0 right-0 h-px bg-cyan-500 transition-transform duration-200 origin-left ${
-                    currentView === view ? 'scale-x-100' : 'scale-x-0'
-                  }`}
-                />
+                <div className="flex items-center gap-3">
+                  <span className="text-[10px] text-gray-600">
+                    {item.shortcut}
+                  </span>
+                  <span>{item.label}</span>
+                </div>
+                {isActive && (
+                  <FiLayers
+                    size={12}
+                    className="text-cyan-400"
+                  />
+                )}
               </button>
-            </li>
-          ))}
-        </ul>
-
-        {/* Mobile hamburger */}
-        <button
-          className="md:hidden flex flex-col gap-1.5 p-2 focus:outline-none"
-          onClick={() => setMenuOpen((prev) => !prev)}
-          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-        >
-          <span
-            className={`block w-5 h-px bg-gray-300 transition-all duration-200 ${
-              menuOpen ? 'rotate-45 translate-y-2' : ''
-            }`}
-          />
-          <span
-            className={`block w-5 h-px bg-gray-300 transition-all duration-200 ${
-              menuOpen ? 'opacity-0' : ''
-            }`}
-          />
-          <span
-            className={`block w-5 h-px bg-gray-300 transition-all duration-200 ${
-              menuOpen ? '-rotate-45 -translate-y-2' : ''
-            }`}
-          />
-        </button>
-      </nav>
-
-      {/* Mobile dropdown */}
-      {menuOpen && (
-        <div className="md:hidden bg-gray-900 border-t border-gray-800 px-6 py-4">
-          <ul className="flex flex-col gap-4">
-            {NAV_LINKS.map(({ label, view }) => (
-              <li key={view}>
-                <button
-                  onClick={() => navigate(view)}
-                  className={`text-sm font-medium w-full text-left transition-colors duration-200 ${
-                    currentView === view ? 'text-cyan-400' : 'text-gray-400'
-                  }`}
-                >
-                  {label}
-                </button>
-              </li>
-            ))}
-          </ul>
+            );
+          })}
         </div>
-      )}
-    </header>
-  )
+      </div>
+    </nav>
+  );
 }

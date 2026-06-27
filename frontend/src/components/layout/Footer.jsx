@@ -1,77 +1,110 @@
-import React from 'react'
-import { FiGithub, FiLinkedin, FiMail } from 'react-icons/fi'
-import { OWNER } from '../../data/staticData'
+import React from "react";
+import { FiGithub, FiLinkedin, FiMail, FiActivity } from "react-icons/fi";
 
 export default function Footer({ setCurrentView }) {
+  const currentYear = new Date().getFullYear();
+
+  const handleQuickLink = (viewId) => {
+    setCurrentView(viewId);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
-    <footer className="border-t border-gray-800 bg-gray-900 mt-24">
+    <footer className="w-full bg-gray-950 border-t border-gray-900/80 font-mono text-xs text-gray-500 relative overflow-hidden">
       <div className="max-w-6xl mx-auto px-6 py-12">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-          {/* Left — identity */}
-          <div>
-            <p
-              className="text-white font-semibold text-base mb-1"
-              style={{ fontFamily: 'Space Grotesk, Inter, sans-serif' }}
-            >
-              Eyob Desalegn
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start text-left">
+          {/* Identity Block */}
+          <div className="space-y-3">
+            <p className="text-white font-bold tracking-wider text-sm">
+              EYOB DESALEGN<span className="text-cyan-400"> // PORTFOLIO</span>
             </p>
-            <p className="text-gray-500 text-sm font-mono">{OWNER.role}</p>
+            <p className="text-[11px] leading-relaxed text-gray-500 font-sans max-w-xs">
+              Engineered for absolute client-side speed, offline resilience, and
+              modern, micro-detailed designs.
+            </p>
           </div>
 
-          {/* Center — nav shortcuts */}
-          <ul className="flex items-center gap-6">
-            {['home', 'projects', 'contact'].map((v) => (
-              <li key={v}>
-                <button
-                  onClick={() => {
-                    setCurrentView(v)
-                    window.scrollTo({ top: 0, behavior: 'smooth' })
-                  }}
-                  className="text-gray-500 hover:text-cyan-400 text-sm capitalize transition-colors duration-200 focus:outline-none"
-                >
-                  {v}
-                </button>
-              </li>
-            ))}
-          </ul>
+          {/* Quick Core Engine Routines */}
+          <div className="space-y-2">
+            <p className="text-gray-400 text-[11px] uppercase tracking-widest font-semibold">
+              // ROUTINES
+            </p>
+            <div className="flex flex-col gap-1.5 items-start">
+              <button
+                onClick={() => handleQuickLink("home")}
+                className="hover:text-cyan-400 transition-colors cursor-pointer text-[11px]"
+              >
+                sys.execute("load_home")
+              </button>
+              <button
+                onClick={() => handleQuickLink("projects")}
+                className="hover:text-cyan-400 transition-colors cursor-pointer text-[11px]"
+              >
+                sys.execute("load_projects")
+              </button>
+              <button
+                onClick={() => handleQuickLink("contact")}
+                className="hover:text-cyan-400 transition-colors cursor-pointer text-[11px]"
+              >
+                sys.execute("load_contact")
+              </button>
+            </div>
+          </div>
 
-          {/* Right — social links */}
-          <div className="flex items-center gap-4">
-            <a
-              href={OWNER.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-500 hover:text-cyan-400 transition-colors duration-200"
-              aria-label="GitHub"
-            >
-              <FiGithub size={18} />
-            </a>
-            <a
-              href={OWNER.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-500 hover:text-cyan-400 transition-colors duration-200"
-              aria-label="LinkedIn"
-            >
-              <FiLinkedin size={18} />
-            </a>
-            <a
-              href={`mailto:${OWNER.email}`}
-              className="text-gray-500 hover:text-cyan-400 transition-colors duration-200"
-              aria-label="Email"
-            >
-              <FiMail size={18} />
-            </a>
+          {/* System Environment Telemetry */}
+          <div className="space-y-3 md:text-right md:flex md:flex-col md:items-end">
+            <p className="text-gray-400 text-[11px] uppercase tracking-widest font-semibold w-full md:text-right">
+              // ENVIRONMENT
+            </p>
+            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-gray-900/40 border border-gray-800">
+              <FiActivity
+                className="text-green-400 animate-pulse"
+                size={12}
+              />
+              <span className="text-[10px] text-gray-400">
+                ALL SYSTEMS OPERATIONAL
+              </span>
+            </div>
           </div>
         </div>
 
-        <div className="mt-8 pt-6 border-t border-gray-800 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-gray-600 text-xs font-mono">
-            {`© ${new Date().getFullYear()} Eyob Desalegn. Built with React & Node.js.`}
+        {/* Lower Border & Connection Matrix */}
+        <div className="mt-10 pt-6 border-t border-gray-900/60 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-[10px] text-gray-600 font-sans">
+            © {currentYear} Eyob Desalegn. Built with React Engine & Tailwind
+            Matrix. All rights reserved.
           </p>
-          <p className="text-gray-700 text-xs font-mono">{OWNER.location}</p>
+
+          {/* Core Network Links */}
+          <div className="flex items-center gap-4">
+            <a
+              href="https://github.com/your-username"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 bg-gray-900/30 hover:bg-gray-900 border border-gray-900 hover:border-gray-800 text-gray-400 hover:text-cyan-400 rounded-lg transition-all duration-200"
+              aria-label="GitHub Repository Access"
+            >
+              <FiGithub size={14} />
+            </a>
+            <a
+              href="https://linkedin.com/in/your-username"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 bg-gray-900/30 hover:bg-gray-900 border border-gray-900 hover:border-gray-800 text-gray-400 hover:text-cyan-400 rounded-lg transition-all duration-200"
+              aria-label="LinkedIn Professional Vector"
+            >
+              <FiLinkedin size={14} />
+            </a>
+            <a
+              href="mailto:your-email@example.com"
+              className="p-2 bg-gray-900/30 hover:bg-gray-900 border border-gray-900 hover:border-gray-800 text-gray-400 hover:text-cyan-400 rounded-lg transition-all duration-200"
+              aria-label="Establish Direct SMTP Mail Connection"
+            >
+              <FiMail size={14} />
+            </a>
+          </div>
         </div>
       </div>
     </footer>
-  )
+  );
 }

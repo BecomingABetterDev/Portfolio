@@ -462,10 +462,7 @@ export default function HomeView({ setCurrentView }) {
   });
 
   return (
-    <div
-      className="view-enter"
-      style={{ paddingTop: "40px" }}
-    >
+    <div className="view-enter">
       {/* ─── ORIGINAL INITIAL HERO SECTION ─── */}
       <section className="max-w-6xl mx-auto px-6 pt-20 pb-16 reveal">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">

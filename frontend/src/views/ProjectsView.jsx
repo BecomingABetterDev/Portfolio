@@ -26,10 +26,7 @@ export default function ProjectsView() {
   const { projects, loading } = useProjects();
 
   return (
-    <div
-      className="view-enter"
-      style={{ paddingTop: "80px" }}
-    >
+    <div className="view-enter">
       <div className="max-w-6xl mx-auto px-6 py-16">
         {/* Header */}
         <SectionHeading
