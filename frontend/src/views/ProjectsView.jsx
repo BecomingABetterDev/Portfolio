@@ -1,32 +1,35 @@
-import React, { useEffect } from 'react'
-import SectionHeading from '../components/ui/SectionHeading'
-import ProjectCard from '../components/ui/ProjectCard'
-import { useProjects } from '../hooks/useProjects'
-import { PLAYGROUND_PROJECTS } from '../data/staticData'
-import { FiCheckCircle } from 'react-icons/fi'
+import React, { useEffect } from "react";
+import SectionHeading from "../components/ui/SectionHeading";
+import ProjectCard from "../components/ui/ProjectCard";
+import { useProjects } from "../hooks/useProjects";
+import { PLAYGROUND_PROJECTS } from "../data/staticData";
+import { FiCheckCircle, FiGithub } from "react-icons/fi";
 
 function useRevealOnScroll() {
   useEffect(() => {
-    const targets = document.querySelectorAll('.reveal')
+    const targets = document.querySelectorAll(".reveal");
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add('visible')
-        })
+          if (entry.isIntersecting) entry.target.classList.add("visible");
+        });
       },
       { threshold: 0.1 }
-    )
-    targets.forEach((el) => observer.observe(el))
-    return () => observer.disconnect()
-  }, [])
+    );
+    targets.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
 }
 
 export default function ProjectsView() {
-  useRevealOnScroll()
-  const { projects, loading } = useProjects()
+  useRevealOnScroll();
+  const { projects, loading } = useProjects();
 
   return (
-    <div className="view-enter" style={{ paddingTop: '80px' }}>
+    <div
+      className="view-enter"
+      style={{ paddingTop: "80px" }}
+    >
       <div className="max-w-6xl mx-auto px-6 py-16">
         {/* Header */}
         <SectionHeading
@@ -43,7 +46,11 @@ export default function ProjectsView() {
             </div>
           ) : (
             projects.map((project) => (
-              <ProjectCard key={project._id} project={project} expanded={true} />
+              <ProjectCard
+                key={project._id}
+                project={project}
+                expanded={true}
+              />
             ))
           )}
         </div>
@@ -56,13 +63,14 @@ export default function ProjectsView() {
             </p>
             <h2
               className="text-2xl md:text-3xl font-bold text-white mb-3"
-              style={{ fontFamily: 'Space Grotesk, Inter, sans-serif' }}
+              style={{ fontFamily: "Space Grotesk, Inter, sans-serif" }}
             >
               The Playground
             </h2>
             <p className="text-gray-400 text-sm leading-relaxed max-w-xl">
-              Contained builds that tested a specific browser mechanic, API pattern, or state
-              architecture. Each one ended with a deliberate conclusion.
+              Contained builds that tested a specific browser mechanic, API
+              pattern, or state architecture. Each one ended with a deliberate
+              conclusion.
             </p>
             <div className="mt-4 w-8 h-px bg-cyan-500" />
           </div>
@@ -71,23 +79,51 @@ export default function ProjectsView() {
             {PLAYGROUND_PROJECTS.map((p) => (
               <article
                 key={p.id}
-                className="bg-gray-800 border border-gray-700 rounded-lg p-5 hover:border-cyan-500 transition-all duration-300 card-lift"
+                className="bg-gray-800 border border-gray-700 rounded-lg p-5 flex flex-col justify-between min-h-[140px] hover:border-cyan-500 transition-all duration-300 card-lift"
               >
-                <div className="flex items-start justify-between mb-3">
-                  <h3
-                    className="text-white font-semibold text-sm"
-                    style={{ fontFamily: 'Space Grotesk, Inter, sans-serif' }}
-                  >
-                    {p.name}
-                  </h3>
-                  <div className="flex items-center gap-1 ml-2 flex-shrink-0">
-                    <FiCheckCircle className="text-green-400" size={12} />
-                    <span className="text-green-400 text-xs font-mono">{p.status}</span>
+                <div>
+                  <div className="flex items-start justify-between mb-3">
+                    <h3
+                      className="text-white font-semibold text-sm"
+                      style={{ fontFamily: "Space Grotesk, Inter, sans-serif" }}
+                    >
+                      {p.name}
+                    </h3>
+                    <div className="flex items-center gap-1 ml-2 flex-shrink-0">
+                      <FiCheckCircle
+                        className="text-green-400"
+                        size={12}
+                      />
+                      <span className="text-green-400 text-xs font-mono">
+                        {p.status}
+                      </span>
+                    </div>
                   </div>
+                  <p className="text-gray-400 text-xs font-mono leading-relaxed">
+                    Tested: {p.tested}
+                  </p>
                 </div>
-                <p className="text-gray-500 text-xs font-mono leading-relaxed">
-                  Tested: {p.tested}
-                </p>
+
+                {/* Split Action Baseline Row */}
+                {p.githubLink && (
+                  <div className="mt-4 pt-3 border-t border-gray-700/40 flex items-center justify-between">
+                    <span className="text-[10px] text-gray-500 font-mono uppercase tracking-wider">
+                      Repository Available
+                    </span>
+                    <a
+                      href={p.githubLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-1.5 rounded bg-gray-900/60 border border-gray-700/50 text-gray-400 hover:text-cyan-400 hover:border-cyan-500/30 transition-all duration-200 group focus:outline-none cursor-pointer"
+                      title="View Experimental Source Code"
+                    >
+                      <FiGithub
+                        size={14}
+                        className="transform group-hover:scale-105 transition-transform"
+                      />
+                    </a>
+                  </div>
+                )}
               </article>
             ))}
           </div>
@@ -97,17 +133,20 @@ export default function ProjectsView() {
             <div className="absolute -left-1 top-0 w-2 h-2 rounded-full bg-cyan-500" />
             <p
               className="text-gray-300 text-base md:text-lg italic leading-relaxed"
-              style={{ fontFamily: 'Space Grotesk, Inter, sans-serif' }}
+              style={{ fontFamily: "Space Grotesk, Inter, sans-serif" }}
             >
-              &ldquo;I treat tutorials as optimization challenges — every boilerplate becomes a
-              target for cleaner state engines, leaner layouts, and deliberate theming.&rdquo;
+              &ldquo;I treat tutorials as optimization challenges — every
+              boilerplate becomes a target for cleaner state engines, leaner
+              layouts, and deliberate theming.&rdquo;
             </p>
             <footer className="mt-3">
-              <cite className="text-gray-500 text-sm font-mono not-italic">— Eyob Desalegn</cite>
+              <cite className="text-gray-500 text-sm font-mono not-italic">
+                — Eyob Desalegn
+              </cite>
             </footer>
           </blockquote>
         </section>
       </div>
     </div>
-  )
+  );
 }
