@@ -1,45 +1,52 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
-const projectSchema = new mongoose.Schema(
-  {
+const projectSchema = new mongoose.Schema({
     name: {
-      type: String,
-      required: true,
-      trim: true,
+        type: String,
+        required: true,
+        trim: true,
     },
     systemTag: {
-      type: String,
-      trim: true,
+        type: String,
+        trim: true,
     },
     status: {
-      type: String,
-      enum: ['Active', 'Completed', 'In Progress'],
-      default: 'In Progress',
+        type: String,
+        enum: ["Active", "Completed", "In Progress"],
+        default: "In Progress",
     },
     shortDescription: {
-      type: String,
+        type: String,
     },
     fullDescription: {
-      type: String,
+        type: String,
     },
     techStackTags: {
-      type: [String],
-      default: [],
+        type: [String],
+        default: [],
     },
     architectureHighlights: {
-      type: [String],
-      default: [],
+        type: [String],
+        default: [],
     },
     isFeatured: {
-      type: Boolean,
-      default: false,
+        type: Boolean,
+        default: false,
     },
     order: {
-      type: Number,
-      default: 0,
+        type: Number,
+        default: 0,
     },
-  },
-  { timestamps: true }
-)
+    imageUrl: {
+        type: String,
+        trim: true,
+        default: "",
+    },
+    githubLink: {
+        type: String,
+        trim: true,
+        default: "",
+    },
+}, { timestamps: true });
 
-module.exports = mongoose.model('Project', projectSchema)
+module.exports = mongoose.model("Project", projectSchema);
