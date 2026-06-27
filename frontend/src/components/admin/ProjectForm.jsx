@@ -1,91 +1,118 @@
-import React, { useState, useEffect } from 'react'
-import toast from 'react-hot-toast'
-import { FiX, FiSave } from 'react-icons/fi'
-import axiosInstance from '../../api/axiosInstance'
-import { commaToArray, arrayToComma, newlineToArray, arrayToNewline } from '../../utils/helpers'
+import React, { useState, useEffect } from "react";
+import toast from "react-hot-toast";
+import { FiX, FiSave } from "react-icons/fi";
+import axiosInstance from "../../api/axiosInstance";
+import {
+  commaToArray,
+  arrayToComma,
+  newlineToArray,
+  arrayToNewline,
+} from "../../utils/helpers";
 
+// Expanded initialization layout containing image and source code keys
 const EMPTY = {
-  name: '',
-  systemTag: '',
-  status: 'In Progress',
-  shortDescription: '',
-  fullDescription: '',
-  techStackTags: '',
-  architectureHighlights: '',
+  name: "",
+  systemTag: "",
+  status: "In Progress",
+  shortDescription: "",
+  fullDescription: "",
+  techStackTags: "",
+  architectureHighlights: "",
   isFeatured: false,
   order: 0,
-}
+  imageUrl: "", // ── NEW STATE PROPERTY FOR IMAGERY LINKING ──
+  githubLink: "", // ── NEW STATE PROPERTY FOR SOURCE CODE REPOSITORIES ──
+};
 
 export default function ProjectForm({ project, onSaved, onCancel }) {
-  const isEdit = Boolean(project && project._id && !project._id.startsWith('static'))
+  const isEdit = Boolean(
+    project && project._id && !project._id.startsWith("static")
+  );
 
-  const [form, setForm] = useState(EMPTY)
-  const [saving, setSaving] = useState(false)
+  const [form, setForm] = useState(EMPTY);
+  const [saving, setSaving] = useState(false);
 
+  // Sync component state when editing an existing project instance
   useEffect(() => {
     if (project) {
       setForm({
-        name: project.name || '',
-        systemTag: project.systemTag || '',
-        status: project.status || 'In Progress',
-        shortDescription: project.shortDescription || '',
-        fullDescription: project.fullDescription || '',
+        name: project.name || "",
+        systemTag: project.systemTag || "",
+        status: project.status || "In Progress",
+        shortDescription: project.shortDescription || "",
+        fullDescription: project.fullDescription || "",
         techStackTags: arrayToComma(project.techStackTags),
         architectureHighlights: arrayToNewline(project.architectureHighlights),
         isFeatured: project.isFeatured || false,
         order: project.order || 0,
-      })
+        imageUrl: project.imageUrl || "", // ── INJECT LIVE CLOUD PROPERTY VALUE ──
+        githubLink: project.githubLink || "", // ── INJECT LIVE CLOUD PROPERTY VALUE ──
+      });
     }
-  }, [project])
+  }, [project]);
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target
-    setForm((prev) => ({ ...prev, [name]: type === 'checkbox' ? checked : value }))
-  }
+    const { name, value, type, checked } = e.target;
+    setForm((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (!form.name.trim()) {
-      toast.error('Project name is required.')
-      return
+      toast.error("Project name is required.");
+      return;
     }
-    setSaving(true)
+    setSaving(true);
+
+    // Assembles outgoing JSON transmission schema
     const payload = {
-      ...form,
+      ...form, // Natively passes along updated imageUrl and githubLink state modifications
       techStackTags: commaToArray(form.techStackTags),
       architectureHighlights: newlineToArray(form.architectureHighlights),
       order: Number(form.order) || 0,
-    }
+    };
+
     try {
       if (isEdit) {
-        await axiosInstance.put(`/projects/${project._id}`, payload)
-        toast.success('Project updated.')
+        await axiosInstance.put(`/projects/${project._id}`, payload);
+        toast.success("Project updated successfully.");
       } else {
-        await axiosInstance.post('/projects', payload)
-        toast.success('Project created.')
+        await axiosInstance.post("/projects", payload);
+        toast.success("Project created successfully.");
       }
-      onSaved()
+      onSaved();
     } catch (err) {
-      const msg = err.response?.data?.message || 'Failed to save project.'
-      toast.error(msg)
+      const msg =
+        err.response?.data?.message ||
+        "Failed to save project config parameters.";
+      toast.error(msg);
     } finally {
-      setSaving(false)
+      setSaving(false);
     }
-  }
+  };
 
   const inputClass =
-    'w-full px-3 py-2.5 rounded text-white text-sm placeholder-gray-600 focus:outline-none'
-  const inputStyle = { background: '#111827', border: '1px solid #374151' }
-  const labelClass = 'block text-gray-400 text-xs font-mono uppercase tracking-wider mb-1.5'
+    "w-full px-3 py-2.5 rounded text-white text-sm placeholder-gray-600 focus:outline-none";
+  const inputStyle = { background: "#111827", border: "1px solid #374151" };
+  const labelClass =
+    "block text-gray-400 text-xs font-mono uppercase tracking-wider mb-1.5";
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
+    <form
+      onSubmit={handleSubmit}
+      className="space-y-5"
+    >
       <div className="flex items-center justify-between mb-6">
         <h3
           className="text-white font-semibold text-lg"
-          style={{ fontFamily: 'Space Grotesk, Inter, sans-serif' }}
+          style={{ fontFamily: "Space Grotesk, Inter, sans-serif" }}
         >
-          {isEdit ? 'Edit Project' : 'Add New Project'}
+          {isEdit
+            ? "Edit Project Config Matrix"
+            : "Provision New Project Record"}
         </h3>
         <button
           type="button"
@@ -107,8 +134,8 @@ export default function ProjectForm({ project, onSaved, onCancel }) {
           placeholder="EthioStudy"
           className={inputClass}
           style={inputStyle}
-          onFocus={(e) => (e.target.style.borderColor = '#06b6d4')}
-          onBlur={(e) => (e.target.style.borderColor = '#374151')}
+          onFocus={(e) => (e.target.style.borderColor = "#06b6d4")}
+          onBlur={(e) => (e.target.style.borderColor = "#374151")}
           required
         />
       </div>
@@ -124,8 +151,8 @@ export default function ProjectForm({ project, onSaved, onCancel }) {
           placeholder="Offline-First Educational Web Application"
           className={inputClass}
           style={inputStyle}
-          onFocus={(e) => (e.target.style.borderColor = '#06b6d4')}
-          onBlur={(e) => (e.target.style.borderColor = '#374151')}
+          onFocus={(e) => (e.target.style.borderColor = "#06b6d4")}
+          onBlur={(e) => (e.target.style.borderColor = "#374151")}
         />
       </div>
 
@@ -139,8 +166,8 @@ export default function ProjectForm({ project, onSaved, onCancel }) {
             onChange={handleChange}
             className={inputClass}
             style={inputStyle}
-            onFocus={(e) => (e.target.style.borderColor = '#06b6d4')}
-            onBlur={(e) => (e.target.style.borderColor = '#374151')}
+            onFocus={(e) => (e.target.style.borderColor = "#06b6d4")}
+            onBlur={(e) => (e.target.style.borderColor = "#374151")}
           >
             <option value="Active">Active</option>
             <option value="Completed">Completed</option>
@@ -157,8 +184,40 @@ export default function ProjectForm({ project, onSaved, onCancel }) {
             min={0}
             className={inputClass}
             style={inputStyle}
-            onFocus={(e) => (e.target.style.borderColor = '#06b6d4')}
-            onBlur={(e) => (e.target.style.borderColor = '#374151')}
+            onFocus={(e) => (e.target.style.borderColor = "#06b6d4")}
+            onBlur={(e) => (e.target.style.borderColor = "#374151")}
+          />
+        </div>
+      </div>
+
+      {/* ─── NEW MEDIA LINKING SUB-GRID ROW ─── */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label className={labelClass}>Project Image URL</label>
+          <input
+            type="text"
+            name="imageUrl"
+            value={form.imageUrl}
+            onChange={handleChange}
+            placeholder="e.g., /images/ethiostudy.png or absolute URL"
+            className={inputClass}
+            style={inputStyle}
+            onFocus={(e) => (e.target.style.borderColor = "#06b6d4")}
+            onBlur={(e) => (e.target.style.borderColor = "#374151")}
+          />
+        </div>
+        <div>
+          <label className={labelClass}>GitHub Repository Link</label>
+          <input
+            type="url"
+            name="githubLink"
+            value={form.githubLink}
+            onChange={handleChange}
+            placeholder="https://github.com/username/repository"
+            className={inputClass}
+            style={inputStyle}
+            onFocus={(e) => (e.target.style.borderColor = "#06b6d4")}
+            onBlur={(e) => (e.target.style.borderColor = "#374151")}
           />
         </div>
       </div>
@@ -174,8 +233,8 @@ export default function ProjectForm({ project, onSaved, onCancel }) {
           placeholder="One or two sentence summary shown on cards"
           className={`${inputClass} resize-y`}
           style={inputStyle}
-          onFocus={(e) => (e.target.style.borderColor = '#06b6d4')}
-          onBlur={(e) => (e.target.style.borderColor = '#374151')}
+          onFocus={(e) => (e.target.style.borderColor = "#06b6d4")}
+          onBlur={(e) => (e.target.style.borderColor = "#374151")}
         />
       </div>
 
@@ -190,8 +249,8 @@ export default function ProjectForm({ project, onSaved, onCancel }) {
           placeholder="Detailed description shown in expanded project view"
           className={`${inputClass} resize-y`}
           style={inputStyle}
-          onFocus={(e) => (e.target.style.borderColor = '#06b6d4')}
-          onBlur={(e) => (e.target.style.borderColor = '#374151')}
+          onFocus={(e) => (e.target.style.borderColor = "#06b6d4")}
+          onBlur={(e) => (e.target.style.borderColor = "#374151")}
         />
       </div>
 
@@ -206,14 +265,16 @@ export default function ProjectForm({ project, onSaved, onCancel }) {
           placeholder="Node.js, Express.js, MongoDB, JWT"
           className={inputClass}
           style={inputStyle}
-          onFocus={(e) => (e.target.style.borderColor = '#06b6d4')}
-          onBlur={(e) => (e.target.style.borderColor = '#374151')}
+          onFocus={(e) => (e.target.style.borderColor = "#06b6d4")}
+          onBlur={(e) => (e.target.style.borderColor = "#374151")}
         />
       </div>
 
       {/* Architecture Highlights */}
       <div>
-        <label className={labelClass}>Architecture Highlights (one per line)</label>
+        <label className={labelClass}>
+          Architecture Highlights (one per line)
+        </label>
         <textarea
           name="architectureHighlights"
           value={form.architectureHighlights}
@@ -222,8 +283,8 @@ export default function ProjectForm({ project, onSaved, onCancel }) {
           placeholder="Service Worker for asset caching and offline serving&#10;IndexedDB as a local mutation buffer"
           className={`${inputClass} resize-y`}
           style={inputStyle}
-          onFocus={(e) => (e.target.style.borderColor = '#06b6d4')}
-          onBlur={(e) => (e.target.style.borderColor = '#374151')}
+          onFocus={(e) => (e.target.style.borderColor = "#06b6d4")}
+          onBlur={(e) => (e.target.style.borderColor = "#374151")}
         />
       </div>
 
@@ -237,7 +298,10 @@ export default function ProjectForm({ project, onSaved, onCancel }) {
           onChange={handleChange}
           className="w-4 h-4 accent-cyan-500"
         />
-        <label htmlFor="isFeatured" className="text-gray-300 text-sm cursor-pointer">
+        <label
+          htmlFor="isFeatured"
+          className="text-gray-300 text-sm cursor-pointer"
+        >
           Feature on homepage
         </label>
       </div>
@@ -250,7 +314,7 @@ export default function ProjectForm({ project, onSaved, onCancel }) {
           className="flex items-center gap-2 px-5 py-2.5 bg-cyan-500 hover:bg-cyan-400 disabled:bg-gray-700 disabled:cursor-not-allowed text-gray-900 disabled:text-gray-500 font-semibold text-sm rounded transition-all duration-200 focus:outline-none"
         >
           <FiSave size={14} />
-          {saving ? 'Saving...' : isEdit ? 'Update Project' : 'Create Project'}
+          {saving ? "Saving..." : isEdit ? "Update Project" : "Create Project"}
         </button>
         <button
           type="button"
@@ -261,5 +325,5 @@ export default function ProjectForm({ project, onSaved, onCancel }) {
         </button>
       </div>
     </form>
-  )
+  );
 }
