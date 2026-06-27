@@ -35,7 +35,13 @@ function useRevealOnScroll() {
 export default function HomeView({ setCurrentView }) {
   useRevealOnScroll();
   const { projects } = useProjects();
-  const featured = projects.slice(0, 3);
+  const featuredProjects = projects
+    .filter((p) => p.isFeatured)
+    .sort((a, b) => (a.order || 0) - (b.order || 0));
+
+  // Fallback to slice the first 3 elements only if no explicit features are set in DB
+  const featured =
+    featuredProjects.length > 0 ? featuredProjects : projects.slice(0, 3);
 
   // Dynamic time-period greeting determination function
   const [greeting, setGreeting] = useState(() => {
