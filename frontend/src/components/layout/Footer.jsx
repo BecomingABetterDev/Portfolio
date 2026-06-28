@@ -10,13 +10,13 @@ export default function Footer({ setCurrentView }) {
   };
 
   return (
-    <footer className="w-full bg-gray-950 border-t border-gray-900/80 font-mono text-xs text-gray-500 relative overflow-hidden">
+    <footer className="w-full bg-gray-950 border-t border-gray-950/80 font-mono text-xs text-gray-500 relative overflow-hidden">
       <div className="max-w-6xl mx-auto px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start text-left">
           {/* Identity Block */}
           <div className="space-y-3">
             <p className="text-white font-bold tracking-wider text-sm">
-              EYOB DESALEGN<span className="text-cyan-400"> // PORTFOLIO</span>
+              EYOB DESALEGN<span className="text-gray-400"> // PORTFOLIO</span>
             </p>
             <p className="text-[11px] leading-relaxed text-gray-500 font-sans max-w-xs">
               Engineered for absolute client-side speed, offline resilience, and
@@ -32,19 +32,19 @@ export default function Footer({ setCurrentView }) {
             <div className="flex flex-col gap-1.5 items-start">
               <button
                 onClick={() => handleQuickLink("home")}
-                className="hover:text-cyan-400 transition-colors cursor-pointer text-[11px]"
+                className="hover:text-purple-900 transition-colors cursor-pointer text-[11px]"
               >
                 sys.execute("load_home")
               </button>
               <button
                 onClick={() => handleQuickLink("projects")}
-                className="hover:text-cyan-400 transition-colors cursor-pointer text-[11px]"
+                className="hover:text-purple-900 transition-colors cursor-pointer text-[11px]"
               >
                 sys.execute("load_projects")
               </button>
               <button
                 onClick={() => handleQuickLink("contact")}
-                className="hover:text-cyan-400 transition-colors cursor-pointer text-[11px]"
+                className="hover:text-purple-900 transition-colors cursor-pointer text-[11px]"
               >
                 sys.execute("load_contact")
               </button>
@@ -90,14 +90,14 @@ export default function Footer({ setCurrentView }) {
               href="https://linkedin.com/in/your-username"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 bg-gray-900/30 hover:bg-gray-900 border border-gray-900 hover:border-gray-800 text-gray-400 hover:text-cyan-400 rounded-lg transition-all duration-200"
+              className="p-2 bg-gray-900/30 hover:bg-gray-900 border border-gray-900 hover:border-gray-800 text-gray-400 hover:text-gray-300 rounded-lg transition-all duration-200"
               aria-label="LinkedIn Professional Vector"
             >
               <FiLinkedin size={14} />
             </a>
             <a
               href="mailto:your-email@example.com"
-              className="p-2 bg-gray-900/30 hover:bg-gray-900 border border-gray-900 hover:border-gray-800 text-gray-400 hover:text-cyan-400 rounded-lg transition-all duration-200"
+              className="p-2 bg-gray-900/30 hover:bg-gray-900 border border-gray-900 hover:border-gray-800 text-gray-400 hover:text-purple-500 rounded-lg transition-all duration-200"
               aria-label="Establish Direct SMTP Mail Connection"
             >
               <FiMail size={14} />

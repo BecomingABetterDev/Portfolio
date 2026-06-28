@@ -24,15 +24,15 @@ export default function Navbar({ currentView, setCurrentView }) {
           onClick={() => handleNavigate("home")}
           className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-white group cursor-pointer focus:outline-none"
         >
-          <div className="p-1.5 bg-gray-900 border border-gray-800 rounded group-hover:border-cyan-500/50 transition-colors">
+          <div className="p-1.5 bg-gray-900 border border-gray-800 rounded group-hover:border-gray-500/50 transition-colors">
             <FiTerminal
-              className="text-cyan-400 group-hover:animate-pulse"
+              className="text-gray-400 group-hover:animate-pulse"
               size={12}
             />
           </div>
           <span className="font-bold tracking-tight text-sm">
             EYOB
-            <span className="text-cyan-400 font-mono font-normal">.SYS</span>
+            <span className="text-gray-400 font-mono font-normal">.SYS</span>
           </span>
         </button>
 
@@ -52,7 +52,7 @@ export default function Navbar({ currentView, setCurrentView }) {
                 <span
                   className={
                     isActive
-                      ? "text-cyan-400 font-medium"
+                      ? "text-gray-400 font-medium"
                       : "text-gray-400 hover:text-white"
                   }
                 >
@@ -61,7 +61,7 @@ export default function Navbar({ currentView, setCurrentView }) {
 
                 {/* Active Underline Highlight */}
                 {isActive && (
-                  <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-cyan-500 shadow-[0_1px_6px_rgba(34,211,238,0.4)] rounded-full" />
+                  <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-gray-500 shadow-[0_1px_6px_rgba(34,211,238,0.4)] rounded-full" />
                 )}
               </button>
             );
@@ -80,7 +80,7 @@ export default function Navbar({ currentView, setCurrentView }) {
 
       {/* Mobile Drawer Overlay Layer */}
       <div
-        className={`fixed top-16 left-0 right-0 bg-gray-950/95 border-b border-gray-900 backdrop-blur-lg md:hidden transition-all duration-300 transform origin-top ${
+        className={`fixed top-16 left-0 right-0 bg-gray-900/95 border-b border-gray-900 backdrop-blur-lg md:hidden transition-all duration-300 transform origin-top ${
           isOpen
             ? "scale-y-100 opacity-100 pointer-events-auto"
             : "scale-y-0 opacity-0 pointer-events-none"
@@ -95,7 +95,7 @@ export default function Navbar({ currentView, setCurrentView }) {
                 onClick={() => handleNavigate(item.id)}
                 className={`w-full py-3 px-4 rounded-lg font-mono text-xs uppercase tracking-widest text-left flex items-center justify-between transition-all ${
                   isActive
-                    ? "bg-cyan-950/20 border border-cyan-900/50 text-cyan-400"
+                    ? "bg-gray-950/20 border border-gray-900/50 text-cyan-400"
                     : "bg-gray-900/20 border border-gray-900 text-gray-400 hover:text-white hover:bg-gray-900/40"
                 }`}
               >
@@ -108,7 +108,7 @@ export default function Navbar({ currentView, setCurrentView }) {
                 {isActive && (
                   <FiLayers
                     size={12}
-                    className="text-cyan-400"
+                    className="text-gray-400 transition-transform"
                   />
                 )}
               </button>

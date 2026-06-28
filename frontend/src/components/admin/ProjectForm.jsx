@@ -261,7 +261,7 @@ export default function ProjectForm({ project, onSaved, onCancel }) {
             name="isFeatured"
             checked={form.isFeatured}
             onChange={handleChange}
-            className="w-4 h-4 accent-cyan-500 cursor-pointer"
+            className="w-4 h-4 accent-gray-500 cursor-pointer"
           />
           <label
             htmlFor="isFeatured"
@@ -273,12 +273,12 @@ export default function ProjectForm({ project, onSaved, onCancel }) {
       </div>
 
       {/* ─── HARDENED HIGH-CONTRAST INTERACTIVE ACTION FOOTER ─── */}
-      <div className="flex gap-3 pt-4 border-t border-gray-800 mt-auto flex-shrink-0 bg-gray-950 z-20 relative">
+      <div className="flex gap-3 pt-4 border-t border-gray-800 mt-auto flex-shrink-0 bg-gray-900 z-20 relative">
         <button
           type="submit"
           disabled={saving}
           style={{ backgroundColor: "#06b6d4", color: "#030712" }}
-          className="flex items-center gap-2 px-5 py-2 bg-cyan-500 hover:bg-cyan-400 text-gray-950 font-mono font-semibold text-xs uppercase tracking-wider rounded transition-all duration-200 focus:outline-none transform hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer shadow-md shadow-cyan-500/10"
+          className="flex items-center gap-2 px-5 py-2 bg-gray-500 hover:bg-gray-400 text-gray-900 font-mono font-semibold text-xs uppercase tracking-wider rounded transition-all duration-200 focus:outline-none transform hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer shadow-md shadow-gray-500/10"
         >
           <FiSave size={14} />
           {saving

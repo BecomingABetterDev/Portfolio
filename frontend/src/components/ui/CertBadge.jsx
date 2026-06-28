@@ -7,10 +7,10 @@ export default function CertBadge({ cert }) {
       href={cert.verificationUrl || "#"}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex items-center justify-between p-3 bg-gray-950/40 border border-gray-900 hover:border-cyan-500/50 rounded-lg transition-all duration-200 block cursor-pointer"
+      className="group flex items-center justify-between p-3 bg-gray-900/40 border border-gray-900 hover:border-cyan-500/50 rounded-lg transition-all duration-200 cursor-pointer"
     >
       <div className="flex items-center gap-3">
-        <div className="p-2 bg-cyan-950/30 text-cyan-400 rounded border border-cyan-900/30 group-hover:bg-cyan-500 group-hover:text-gray-950 transition-all duration-200">
+        <div className="p-2 bg-cyan-950/30 text-cyan-400 rounded border border-cyan-900/30 group-hover:bg-cyan-500 group-hover:text-gray-700 transition-all duration-200">
           <FiAward size={14} />
         </div>
         <div className="text-left">

@@ -385,7 +385,7 @@ const BALANCED_STACK = [
     description: "Highly interactive state architectures & render engines.",
     icon: (
       <FiLayers
-        className="text-cyan-400"
+        className="text-gray-400"
         size={14}
       />
     ),
@@ -481,7 +481,7 @@ export default function HomeView({ setCurrentView }) {
               >
                 {OWNER.name}
               </h1>
-              <p className="text-cyan-400 font-mono text-xs sm:text-base mt-4 tracking-wide">
+              <p className="text-gray-300 font-mono text-xs sm:text-base mt-4 tracking-wide">
                 {OWNER.role}
               </p>
             </div>
@@ -505,7 +505,7 @@ export default function HomeView({ setCurrentView }) {
               </span>
               <a
                 href={`mailto:${OWNER.email}`}
-                className="flex items-center gap-1.5 text-gray-400 hover:text-cyan-400 transition-colors"
+                className="flex items-center gap-1.5 text-gray-400 hover:text-gray-400 transition-colors"
               >
                 <FiMail /> Establish Contact
               </a>
@@ -518,7 +518,7 @@ export default function HomeView({ setCurrentView }) {
                   setCurrentView("projects");
                   window.scrollTo({ top: 0, behavior: "smooth" });
                 }}
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-cyan-500 hover:bg-cyan-400 text-gray-950 font-mono font-semibold text-xs uppercase tracking-wider card-lift rounded transition-all cursor-pointer focus:outline-none"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-600 hover:bg-gray-400 text-gray-950 font-mono font-semibold text-xs uppercase tracking-wider card-lift rounded transition-all cursor-pointer focus:outline-none"
               >
                 Explore System Metrics <FiArrowRight size={14} />
               </button>
@@ -554,7 +554,7 @@ export default function HomeView({ setCurrentView }) {
       {/* ─── NEW HIGH-FIDELITY TECHNOLOGY DECK SECTION (ASYMMETRICAL SYSTEM) ─── */}
       <section className="max-w-6xl mx-auto px-6 py-16 border-t border-gray-900">
         <div className="mb-10 text-left">
-          <p className="text-cyan-500 font-mono text-xs tracking-widest uppercase mb-1">
+          <p className="text-gray-500 font-mono text-xs tracking-widest uppercase mb-1">
             // ENGINE_CAPABILITIES
           </p>
           <h2
@@ -563,7 +563,7 @@ export default function HomeView({ setCurrentView }) {
           >
             Core Technology Deck
           </h2>
-          <div className="mt-2 w-10 h-0.5 bg-cyan-500" />
+          <div className="mt-2 w-full h-0.5 bg-gray-500" />
         </div>
 
         {/* Fixed vertical stacking gaps and balanced third card space */}
@@ -630,7 +630,7 @@ export default function HomeView({ setCurrentView }) {
                 setCurrentView("projects");
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }}
-              className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 font-mono text-sm group transition-colors duration-200 focus:outline-none cursor-pointer"
+              className="inline-flex items-center gap-2 text-gray-400 hover:text-gray-300 font-mono text-sm group transition-colors duration-200 focus:outline-none cursor-pointer"
             >
               See All Projects
               <FiArrowRight

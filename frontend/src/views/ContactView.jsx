@@ -53,9 +53,9 @@ export default function ContactView() {
           <div className="space-y-6">
             <div className="space-y-5">
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center flex-shrink-0">
+                <div className="w-10 h-10 rounded bg-gray-500/10 border border-gray-500/20 flex items-center justify-center flex-shrink-0">
                   <FiMail
-                    className="text-cyan-400"
+                    className="text-gray-400"
                     size={16}
                   />
                 </div>
@@ -65,7 +65,7 @@ export default function ContactView() {
                   </p>
                   <a
                     href={`mailto:${OWNER.email}`}
-                    className="text-white text-sm hover:text-cyan-400 transition-colors duration-200 font-mono"
+                    className="text-white text-sm hover:text-gray-400 transition-colors duration-200 font-mono"
                   >
                     {OWNER.email}
                   </a>
@@ -73,9 +73,9 @@ export default function ContactView() {
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center flex-shrink-0">
+                <div className="w-10 h-10 rounded bg-gray-500/10 border border-gray-500/20 flex items-center justify-center flex-shrink-0">
                   <FiMapPin
-                    className="text-cyan-400"
+                    className="text-gray-400"
                     size={16}
                   />
                 </div>
@@ -92,8 +92,8 @@ export default function ContactView() {
 
             {/* Availability Badge Card */}
             <div className="bg-gray-900/30 border border-gray-800/80 rounded-xl p-6 backdrop-blur-md relative overflow-hidden">
-              <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-500/10 to-transparent" />
-              <p className="text-cyan-400 font-mono text-xs uppercase tracking-wider mb-3">
+              <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-gray-500/10 to-transparent" />
+              <p className="text-gray-200 font-mono text-xs uppercase tracking-wider mb-3">
                 Availability
               </p>
               <p className="text-gray-400 text-sm leading-relaxed">
@@ -102,7 +102,7 @@ export default function ContactView() {
                 project consulting.
               </p>
               <div className="mt-4 flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+                <span className="w-2 h-2 rounded-full bg-gray-400 animate-pulse" />
                 <span className="text-cyan-400 text-xs font-mono tracking-wide">
                   Open to opportunities
                 </span>
@@ -135,7 +135,7 @@ export default function ContactView() {
                       onChange={handleChange}
                       placeholder="Your name"
                       required
-                      className="w-full px-4 py-2.5 bg-gray-900/50 border border-gray-800 rounded text-white text-sm placeholder-gray-700 focus:outline-none focus:border-cyan-500/60 focus:ring-1 focus:ring-cyan-500/30 transition-all duration-200 font-mono"
+                      className="w-full px-4 py-2.5 bg-gray-900/50 border border-gray-800 rounded text-white text-sm placeholder-gray-700 focus:outline-none focus:border-gray-500/60 focus:ring-1 focus:ring-gray-500/30 transition-all duration-200 font-mono"
                     />
                   </div>
 
@@ -155,7 +155,7 @@ export default function ContactView() {
                       onChange={handleChange}
                       placeholder="your@email.com"
                       required
-                      className="w-full px-4 py-2.5 bg-gray-900/50 border border-gray-800 rounded text-white text-sm placeholder-gray-700 focus:outline-none focus:border-cyan-500/60 focus:ring-1 focus:ring-cyan-500/30 transition-all duration-200 font-mono"
+                      className="w-full px-4 py-2.5 bg-gray-900/50 border border-gray-800 rounded text-white text-sm placeholder-gray-700 focus:outline-none focus:border-gray-500/60 focus:ring-1 focus:ring-gray-500/30 transition-all duration-200 font-mono"
                     />
                   </div>
                 </div>
@@ -175,7 +175,7 @@ export default function ContactView() {
                     value={form.subject}
                     onChange={handleChange}
                     placeholder="What is this about?"
-                    className="w-full px-4 py-2.5 bg-gray-900/50 border border-gray-800 rounded text-white text-sm placeholder-gray-700 focus:outline-none focus:border-cyan-500/60 focus:ring-1 focus:ring-cyan-500/30 transition-all duration-200 font-mono"
+                    className="w-full px-4 py-2.5 bg-gray-900/50 border border-gray-800 rounded text-white text-sm placeholder-gray-700 focus:outline-none focus:border-gray-500/60 focus:ring-1 focus:ring-gray-500/30 transition-all duration-200 font-mono"
                   />
                 </div>
 
@@ -195,7 +195,7 @@ export default function ContactView() {
                     placeholder="Describe your project, question, or idea..."
                     rows={4}
                     required
-                    className="w-full px-4 py-2.5 bg-gray-900/50 border border-gray-800 rounded text-white text-sm placeholder-gray-700 resize-y focus:outline-none focus:border-cyan-500/60 focus:ring-1 focus:ring-cyan-500/30 transition-all duration-200 font-mono"
+                    className="w-full px-4 py-2.5 bg-gray-900/50 border border-gray-800 rounded text-white text-sm placeholder-gray-700 resize-y focus:outline-none focus:border-gray-500/60 focus:ring-1 focus:ring-gray-500/30 transition-all duration-200 font-mono"
                   />
                 </div>
 
@@ -203,7 +203,7 @@ export default function ContactView() {
                 <button
                   type="submit"
                   disabled={sending}
-                  className="w-full py-2.5 mt-2 bg-cyan-500 hover:bg-cyan-400 disabled:bg-gray-800 disabled:cursor-not-allowed text-gray-950 disabled:text-gray-600 font-mono font-semibold text-xs uppercase tracking-wider rounded transition-all duration-200 focus:outline-none transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
+                  className="w-full py-2.5 mt-2 bg-gray-500 hover:bg-gray-400 disabled:bg-gray-800 disabled:cursor-not-allowed text-gray-950 disabled:text-gray-600 font-mono font-semibold text-xs uppercase tracking-wider rounded transition-all duration-200 focus:outline-none transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
                 >
                   {sending ? (
                     <>
@@ -231,7 +231,7 @@ export default function ContactView() {
                   unreachable. Please route your transmission directly to:{" "}
                   <a
                     href={`mailto:${OWNER.email}`}
-                    className="text-cyan-400 underline hover:text-cyan-300 transition-colors duration-150"
+                    className="text-gray-400 underline hover:text-gray-300 transition-colors duration-150"
                   >
                     {OWNER.email}
                   </a>

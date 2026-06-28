@@ -11,11 +11,14 @@ import {
   FiTerminal,
   FiGrid,
   FiUser,
+  FiMenu,
+  FiX,
 } from "react-icons/fi";
 import { useAuth } from "../context/AuthContext";
 import axiosInstance from "../api/axiosInstance";
 import ProjectForm from "../components/admin/ProjectForm";
 import MessageList from "../components/admin/MessageList";
+import DeleteModal from "../components/admin/DeleteModal";
 
 // ─── LOGIN SCREEN (MODERNIZED HARDENED CONTROL BLOCK) ────────────────────────
 function LoginScreen({ onLogin }) {
@@ -46,17 +49,13 @@ function LoginScreen({ onLogin }) {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-950 px-4 relative overflow-hidden">
-      {/* Background Micro Accents */}
-      <div className="absolute top-[-10%] left-[-10%] w-[400px] h-[400px] bg-cyan-500/[0.02] rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[400px] h-[400px] bg-blue-500/[0.02] rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-500 to-transparent opacity-20" />
 
-      <div className="w-full max-w-sm bg-gray-900/40 border border-gray-800/80 p-8 rounded-xl backdrop-blur-md shadow-2xl relative">
-        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-500/20 to-transparent" />
-
+      <div className="w-full max-w-sm bg-gray-900 bg-opacity-40 border border-gray-800 p-8 rounded-xl backdrop-blur-md shadow-2xl relative">
         {/* Gateway Header */}
         <div className="mb-8">
-          <div className="w-10 h-10 rounded border border-gray-800 bg-gray-900/60 flex items-center justify-center mb-4 group hover:border-cyan-500/50 transition-colors duration-300">
-            <span className="text-cyan-400 font-mono font-bold tracking-tight text-sm">
+          <div className="w-10 h-10 rounded border border-gray-800 bg-gray-900 bg-opacity-60 flex items-center justify-center mb-4 group hover:border-gray-500 transition-colors duration-300">
+            <span className="text-gray-400 font-mono font-bold tracking-tight text-sm">
               SYS
             </span>
           </div>
@@ -86,7 +85,7 @@ function LoginScreen({ onLogin }) {
               value={form.email}
               onChange={handleChange}
               placeholder="admin@example.com"
-              className="w-full px-4 py-2.5 bg-gray-950 border border-gray-800 rounded text-white text-sm placeholder-gray-700 focus:outline-none focus:border-cyan-500/60 focus:ring-1 focus:ring-cyan-500/30 transition-all duration-200 font-mono"
+              className="w-full px-4 py-2.5 bg-gray-900 border border-gray-800 rounded text-white text-sm placeholder-gray-700 focus:outline-none focus:border-gray-500 transition-all duration-200 font-mono"
               autoComplete="email"
               required
             />
@@ -101,7 +100,7 @@ function LoginScreen({ onLogin }) {
               value={form.password}
               onChange={handleChange}
               placeholder="••••••••"
-              className="w-full px-4 py-2.5 bg-gray-950 border border-gray-800 rounded text-white text-sm placeholder-gray-700 focus:outline-none focus:border-cyan-500/60 focus:ring-1 focus:ring-cyan-500/30 transition-all duration-200"
+              className="w-full px-4 py-2.5 bg-gray-900 border border-gray-800 rounded text-white text-sm placeholder-gray-700 focus:outline-none focus:border-gray-500 transition-all duration-200"
               autoComplete="current-password"
               required
             />
@@ -110,7 +109,7 @@ function LoginScreen({ onLogin }) {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2.5 mt-4 bg-cyan-500 hover:bg-cyan-400 disabled:bg-gray-800 disabled:cursor-not-allowed text-gray-950 disabled:text-gray-600 font-semibold text-xs font-mono uppercase tracking-wider rounded transition-all duration-200 focus:outline-none"
+            className="w-full py-2.5 mt-4 bg-gray-500 hover:bg-gray-400 disabled:bg-gray-800 disabled:cursor-not-allowed text-gray-950 disabled:text-gray-600 font-semibold text-xs font-mono uppercase tracking-wider rounded transition-all duration-200 focus:outline-none"
           >
             {loading ? "Authenticating..." : "Establish Session"}
           </button>
@@ -131,6 +130,13 @@ function ProjectsPanel() {
   const [formOpen, setFormOpen] = useState(false);
   const [editTarget, setEditTarget] = useState(null);
 
+  const [deleteModal, setDeleteModal] = useState({
+    isOpen: false,
+    targetId: null,
+    targetName: "",
+  });
+  const [isDeleting, setIsDeleting] = useState(false);
+
   const fetchProjects = useCallback(async () => {
     setLoading(true);
     try {
@@ -148,14 +154,25 @@ function ProjectsPanel() {
     fetchProjects();
   }, [fetchProjects]);
 
-  const handleDelete = async (id) => {
-    if (!window.confirm("Delete this project? This cannot be undone.")) return;
+  const triggerDeletePrompt = (project) => {
+    setDeleteModal({
+      isOpen: true,
+      targetId: project._id,
+      targetName: project.name,
+    });
+  };
+
+  const executeDeleteRoutine = async () => {
+    setIsDeleting(true);
     try {
-      await axiosInstance.delete(`/projects/${id}`);
-      setProjects((prev) => prev.filter((p) => p._id !== id));
+      await axiosInstance.delete(`/projects/${deleteModal.targetId}`);
+      setProjects((prev) => prev.filter((p) => p._id !== deleteModal.targetId));
       toast.success("Project deleted.");
+      setDeleteModal({ isOpen: false, targetId: null, targetName: "" });
     } catch {
       toast.error("Could not delete project.");
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -177,15 +194,18 @@ function ProjectsPanel() {
 
   const STATUS_CONFIG = {
     Active: {
-      color: "text-cyan-400 bg-cyan-500/10 border-cyan-500/20",
-      dot: "bg-cyan-400",
+      color:
+        "text-gray-400 bg-gray-500 bg-opacity-10 border-gray-500 border-opacity-20",
+      dot: "bg-gray-400",
     },
     Completed: {
-      color: "text-green-400 bg-green-500/10 border-green-500/20",
+      color:
+        "text-green-400 bg-green-500 bg-opacity-10 border-green-500 border-opacity-20",
       dot: "bg-green-400",
     },
     "In Progress": {
-      color: "text-yellow-400 bg-yellow-500/10 border-yellow-500/20",
+      color:
+        "text-yellow-400 bg-yellow-500 bg-opacity-10 border-yellow-500 border-opacity-20",
       dot: "bg-yellow-400",
     },
   };
@@ -193,10 +213,10 @@ function ProjectsPanel() {
   return (
     <div className="space-y-6">
       {/* Panel Toolbar Header */}
-      <div className="flex items-center justify-between border-b border-gray-800/60 pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-gray-800 pb-4 gap-3">
         <div className="flex items-center gap-2">
           <FiGrid
-            className="text-cyan-500/80"
+            className="text-cyan-400 opacity-80"
             size={16}
           />
           <h2
@@ -208,7 +228,7 @@ function ProjectsPanel() {
         </div>
         <button
           onClick={openCreate}
-          className="flex items-center gap-2 px-4 py-2 bg-cyan-500 hover:bg-cyan-400 text-gray-950 font-mono font-semibold text-xs uppercase tracking-wider rounded transition-all duration-200 focus:outline-none transform hover:-translate-y-0.5"
+          className="flex items-center justify-center gap-2 px-4 py-2 bg-gray-500 hover:bg-gray-400 text-gray-900 font-mono font-semibold text-xs uppercase tracking-wider rounded transition-all duration-200 focus:outline-none"
         >
           <FiPlus size={14} />
           Append Record
@@ -217,8 +237,8 @@ function ProjectsPanel() {
 
       {/* Embedded Form Module */}
       {formOpen && (
-        <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-6 shadow-xl backdrop-blur-xs relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-1 h-full bg-cyan-500" />
+        <div className="bg-gray-900 bg-opacity-50 border border-gray-800 rounded-xl p-6 shadow-xl relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-1 h-full bg-gray-500" />
           <ProjectForm
             project={editTarget}
             onSaved={onSaved}
@@ -230,10 +250,10 @@ function ProjectsPanel() {
       {/* Dynamic Render Tree */}
       {loading ? (
         <div className="flex items-center justify-center py-20">
-          <div className="w-6 h-6 border-2 border-cyan-500/30 border-t-cyan-400 rounded-full animate-spin" />
+          <div className="w-6 h-6 border-2 border-gray-500 border-opacity-30 border-t-gray-400 rounded-full animate-spin" />
         </div>
       ) : projects.length === 0 ? (
-        <div className="text-center py-16 bg-gray-900/20 border border-dashed border-gray-800 rounded-xl">
+        <div className="text-center py-16 bg-gray-900 bg-opacity-20 border border-dashed border-gray-800 rounded-xl">
           <FiFolder
             className="mx-auto text-gray-700 mb-3"
             size={28}
@@ -246,11 +266,11 @@ function ProjectsPanel() {
           </p>
         </div>
       ) : (
-        <div className="overflow-hidden border border-gray-800/80 rounded-xl bg-gray-900/10 backdrop-blur-xs">
+        <div className="overflow-hidden border border-gray-800 rounded-xl bg-gray-900 bg-opacity-10">
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-gray-900/40 border-b border-gray-800/80">
+                <tr className="bg-gray-900 bg-opacity-40 border-b border-gray-800">
                   <th className="px-5 py-3 text-gray-500 font-mono text-[10px] uppercase tracking-widest">
                     Project Identifier
                   </th>
@@ -265,16 +285,17 @@ function ProjectsPanel() {
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-800/40 font-mono text-xs">
+              <tbody className="divide-y divide-gray-800 divide-opacity-40 font-mono text-xs">
                 {projects.map((p) => {
                   const stateConfig = STATUS_CONFIG[p.status] || {
-                    color: "text-gray-400 bg-gray-800/40 border-gray-700/30",
+                    color:
+                      "text-gray-400 bg-gray-800 bg-opacity-40 border-gray-700 border-opacity-30",
                     dot: "bg-gray-500",
                   };
                   return (
                     <tr
                       key={p._id}
-                      className="hover:bg-gray-800/20 transition-colors duration-150"
+                      className="hover:bg-gray-800 hover:bg-opacity-20 transition-colors duration-150"
                     >
                       <td className="px-5 py-4">
                         <div className="flex items-center gap-2.5">
@@ -282,7 +303,7 @@ function ProjectsPanel() {
                             {p.name}
                           </span>
                           {p.isFeatured && (
-                            <span className="px-1.5 py-0.5 text-[9px] font-mono rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 tracking-wider uppercase scale-95">
+                            <span className="px-1.5 py-0.5 text-[9px] font-mono rounded bg-gray-500 bg-opacity-10 text-gray-400 border border-gray-500 border-opacity-20 tracking-wider uppercase">
                               featured
                             </span>
                           )}
@@ -306,14 +327,14 @@ function ProjectsPanel() {
                           <button
                             onClick={() => openEdit(p)}
                             title="Modify Record"
-                            className="p-1.5 text-gray-500 hover:text-cyan-400 hover:bg-gray-800/40 rounded transition-all duration-150 focus:outline-none"
+                            className="p-1.5 text-gray-500 hover:text-green-600 hover:bg-gray-800 hover:bg-opacity-40 rounded transition-all duration-150 focus:outline-none"
                           >
                             <FiEdit2 size={13} />
                           </button>
                           <button
-                            onClick={() => handleDelete(p._id)}
+                            onClick={() => triggerDeletePrompt(p)}
                             title="Wipe Record"
-                            className="p-1.5 text-gray-500 hover:text-red-400 hover:bg-gray-800/40 rounded transition-all duration-150 focus:outline-none"
+                            className="p-1.5 text-gray-500 hover:text-red-400 hover:bg-gray-800 hover:bg-opacity-40 rounded transition-all duration-150 focus:outline-none"
                           >
                             <FiTrash2 size={13} />
                           </button>
@@ -327,14 +348,26 @@ function ProjectsPanel() {
           </div>
         </div>
       )}
+
+      <DeleteModal
+        isOpen={deleteModal.isOpen}
+        onClose={() =>
+          setDeleteModal({ isOpen: false, targetId: null, targetName: "" })
+        }
+        onConfirm={executeDeleteRoutine}
+        title="Project Schema Document"
+        itemName={deleteModal.targetName}
+        loading={isDeleting}
+      />
     </div>
   );
 }
 
-// ─── DASHBOARD SHELL (LAYOUT-COMPATIBLE WORKSPACE) ───────────────────────────
+// ─── DASHBOARD SHELL (RESPONSIVE VIEWPORT CONSOLE) ───────────────────────────
 function Dashboard({ setCurrentView }) {
   const { logout, adminEmail } = useAuth();
   const [panel, setPanel] = useState("projects");
+  const [sidebarOpen, setSidebarOpen] = useState(false); // 👈 Mobile sidebar controller state
 
   const handleLogout = () => {
     logout();
@@ -348,34 +381,49 @@ function Dashboard({ setCurrentView }) {
   ];
 
   return (
-    /* FIXED NAVIDENT PATTERN COMPATIBILITY WORKAROUND:
-      We explicitly map the top margin to match the 80px global layout constraints, 
-      preventing fixed navbar containers from sliding directly over title modules.
-    */
-    <div className="h-screen overflow-hidden bg-gray-950 flex">
+    <div className="h-screen overflow-hidden bg-gray-950 flex relative">
+      {/* Mobile Drawer Overlay Backdrop */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-60 z-40 md:hidden backdrop-blur-sm"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
       {/* Control Workspace Left Sidebar */}
-      <aside className="w-60 flex-shrink-0 bg-gray-950 border-r border-gray-900 flex flex-col relative z-20">
+      <aside
+        className={`fixed inset-y-0 left-0 w-60 bg-gray-950 border-r border-gray-900 flex flex-col z-50 transform transition-transform duration-200 ease-in-out md:static md:translate-x-0 ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
         {/* Account Profiler Node */}
-        <div className="px-5 py-5 border-b border-gray-900 bg-gray-900/[0.15]">
-          <div className="flex items-center gap-2.5">
-            <div className="w-7 h-7 rounded border border-gray-800 bg-gray-900/60 flex items-center justify-center">
+        <div className="px-5 py-5 border-b border-gray-900 bg-gray-900 bg-opacity-20 flex items-center justify-between">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <div className="w-7 h-7 rounded border border-gray-800 bg-gray-900 bg-opacity-60 flex items-center justify-center flex-shrink-0">
               <FiUser
                 size={13}
                 className="text-cyan-400"
               />
             </div>
-            <div>
+            <div className="min-w-0">
               <span
                 className="text-white text-xs font-semibold tracking-tight block"
                 style={{ fontFamily: "Space Grotesk, Inter, sans-serif" }}
               >
                 Control Console
               </span>
-              <span className="text-[10px] font-mono text-gray-500 block max-w-[140px] truncate mt-0.5">
+              <span className="text-[10px] font-mono text-gray-500 block truncate mt-0.5">
                 {adminEmail}
               </span>
             </div>
           </div>
+          {/* Mobile Sidebar Close Button */}
+          <button
+            onClick={() => setSidebarOpen(false)}
+            className="p-1 text-gray-500 hover:text-white md:hidden focus:outline-none"
+          >
+            <FiX size={16} />
+          </button>
         </div>
 
         {/* Console Panel Traversal Nav */}
@@ -385,21 +433,24 @@ function Dashboard({ setCurrentView }) {
             return (
               <button
                 key={id}
-                onClick={() => setPanel(id)}
+                onClick={() => {
+                  setPanel(id);
+                  setSidebarOpen(false); // Close on selection on mobile viewports
+                }}
                 className={`w-full flex items-center gap-3 px-3 py-2 rounded text-xs font-mono tracking-wide transition-all duration-200 focus:outline-none relative group ${
                   isSelected
-                    ? "text-cyan-400 bg-cyan-500/[0.04] border border-cyan-500/20 font-medium"
-                    : "text-gray-500 hover:text-gray-200 hover:bg-gray-900/40 border border-transparent"
+                    ? "text-cyan-400 bg-gray-500 bg-opacity-5 border border-gray-500 border-opacity-20 font-medium"
+                    : "text-gray-500 hover:text-gray-200 hover:bg-gray-900 hover:bg-opacity-40 border border-transparent"
                 }`}
               >
                 {isSelected && (
-                  <span className="absolute left-0 top-2 bottom-2 w-[2px] bg-cyan-400 rounded-r" />
+                  <span className="absolute left-0 top-2 bottom-2 w-0.5 bg-gray-400 rounded-r" />
                 )}
                 <Icon
                   size={14}
                   className={
                     isSelected
-                      ? "text-cyan-400"
+                      ? "text-gray-400"
                       : "text-gray-500 group-hover:text-gray-400"
                   }
                 />
@@ -410,20 +461,20 @@ function Dashboard({ setCurrentView }) {
         </nav>
 
         {/* Global Traversal and Session Exit Anchors */}
-        <div className="px-3 pb-6 space-y-1 border-t border-gray-900/60 pt-4">
+        <div className="px-3 pb-6 space-y-1 border-t border-gray-900 border-opacity-60 pt-4">
           <button
             onClick={() => {
               setCurrentView("home");
               window.scrollTo({ top: 0, behavior: "smooth" });
             }}
-            className="w-full flex items-center gap-3 px-3 py-2 rounded text-xs font-mono text-gray-500 hover:text-gray-200 hover:bg-gray-900/40 border border-transparent transition-all duration-150 focus:outline-none"
+            className="w-full flex items-center gap-3 px-3 py-2 rounded text-xs font-mono text-gray-500 hover:text-gray-200 hover:bg-gray-900 hover:bg-opacity-40 border border-transparent transition-all duration-150 focus:outline-none"
           >
             <FiEye size={14} />
             Exit Dashboard
           </button>
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-3 py-2 rounded text-xs font-mono text-gray-500 hover:text-red-400 hover:bg-red-500/[0.04] border border-transparent transition-all duration-150 focus:outline-none"
+            className="w-full flex items-center gap-3 px-3 py-2 rounded text-xs font-mono text-gray-500 hover:text-red-400 hover:bg-red-500 hover:bg-opacity-5 border border-transparent transition-all duration-150 focus:outline-none"
           >
             <FiLogOut size={14} />
             Purge Session (Logout)
@@ -432,10 +483,25 @@ function Dashboard({ setCurrentView }) {
       </aside>
 
       {/* Primary Display Viewport */}
-      <main className="flex-1 overflow-y-auto bg-gray-950/40 relative z-10">
-        <div className="p-8 max-w-5xl mx-auto w-full">
+      <main className="flex-1 overflow-y-auto bg-gray-950 bg-opacity-40 relative z-10">
+        {/* Mobile Top Header Navigation Bar */}
+        <div className="flex items-center justify-between md:hidden px-6 py-4 bg-gray-900 bg-opacity-60 border-b border-gray-900 sticky top-0 z-30 backdrop-blur-md">
+          <button
+            onClick={() => setSidebarOpen(true)}
+            className="p-2 -ml-2 text-gray-400 hover:text-gray-400 focus:outline-none"
+            title="Open navigation panel"
+          >
+            <FiMenu size={20} />
+          </button>
+          <span className="text-white font-mono text-xs font-bold tracking-widest">
+            SYS_CONSOLE
+          </span>
+          <div className="w-6" /> {/* Balance alignment spacer */}
+        </div>
+
+        <div className="p-4 sm:p-8 max-w-5xl mx-auto w-full">
           {/* View Metadata Jumbotron Header */}
-          <div className="mb-8 pb-5 border-b border-gray-900 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div className="mb-8 pb-5 border-b border-gray-900 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
               <h1
                 className="text-xl font-bold text-white tracking-tight flex items-center gap-2"
