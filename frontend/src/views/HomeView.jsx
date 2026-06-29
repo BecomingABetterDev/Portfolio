@@ -298,9 +298,9 @@ export default function HomeView({ setCurrentView }) {
   }, []);
 
   return (
-    <div className="min-h-screen w-full overflow-x-hidden bg-gray-950">
+    <div className="min-h-screen w-full overflow-x-hidden bg-gray-950 ">
       {/* ─── MAIN HERO LAYER ─── */}
-      <section className="max-w-6xl mx-auto px-6 py-12 md:py-20 reveal view-enter">
+      <section className="max-w-6xl mx-auto px-6 md:py-20 reveal view-enter">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           {/* Left Column — Core Bio Deck */}
           <div className="lg:col-span-7 space-y-8 text-left">
@@ -309,11 +309,11 @@ export default function HomeView({ setCurrentView }) {
               {/* 🎯 Integrated Cyberpunk Picture Frame */}
               <div className="relative group w-28 h-28 sm:w-32 sm:h-32 flex-shrink-0">
                 {/* Tech Accent Corner Decorators */}
-                <div className="absolute -top-1 -left-1 w-3 h-3 border-t-2 border-l-2 border-cyan-400 rounded-tl z-10" />
-                <div className="absolute -bottom-1 -right-1 w-3 h-3 border-b-2 border-r-2 border-cyan-400 rounded-br z-10" />
+                <div className="absolute -top-1 -left-1 w-3 h-3 border-t-2 border-l-2 border-gray-400 rounded-tl z-10" />
+                <div className="absolute -bottom-1 -right-1 w-3 h-3 border-b-2 border-r-2 border-gray-400 rounded-br z-10" />
 
                 {/* Framing Slot */}
-                <div className="w-full h-full rounded-xl overflow-hidden border border-gray-800 bg-gray-900/40 p-1.5 group-hover:border-cyan-500/30 transition-all duration-300 shadow-xl shadow-black/50">
+                <div className="w-full h-full rounded-xl overflow-hidden border border-gray-800 bg-gray-900/40 p-1.5 group-hover:border-gray-500/30 transition-all duration-300 shadow-xl shadow-black/50">
                   <img
                     src="https://i.ibb.co/zWb2BsRM/Gemini-Generated-Image-ital1wital1wital.jpg"
                     alt="Eyob Desalegn"
@@ -336,7 +336,7 @@ export default function HomeView({ setCurrentView }) {
                 >
                   {OWNER.name}
                 </h1>
-                <p className="text-cyan-400 font-mono text-xs sm:text-sm tracking-wider font-semibold pt-0.5">
+                <p className="text-gray-400 font-mono text-xs sm:text-sm tracking-wider font-semibold pt-0.5">
                   {displayedRole}
                   <span className="blinking-cursor">|</span>
                 </p>
@@ -395,11 +395,29 @@ export default function HomeView({ setCurrentView }) {
 
           {/* Right Column — Certifications Deck */}
           <div className="lg:col-span-5 bg-gray-900/20 border border-gray-800/60 rounded-xl p-6 backdrop-blur-sm text-left w-full">
-            <div className="flex items-center gap-2 mb-4 text-gray-400 font-mono text-xs uppercase tracking-widest border-b border-gray-900 pb-3">
-              <FiTerminal className="text-cyan-500" /> System Credentials
+            <div className="flex items-center justify-between mb-4 text-gray-400 font-mono text-xs uppercase tracking-widest border-b border-gray-900 pb-3">
+              <div className="flex items-center gap-2">
+                <FiTerminal className="text-gray-500" /> System Credentials
+              </div>
+              {/* Dynamic 'See All' Link — Only visible if count exceeds 6 */}
+              {CERTIFICATIONS.length > 6 && (
+                <a
+                  href="#all-certifications"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document
+                      .getElementById("all-certifications")
+                      ?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                  className="text-gray-400 hover:text-gray-300 transition-colors font-mono tracking-normal text-[11px] lowercase normal-case"
+                >
+                  view_all({CERTIFICATIONS.length})
+                </a>
+              )}
             </div>
             <div className="space-y-3">
-              {CERTIFICATIONS.map((cert) => (
+              {/* Scaled to display a safe max limit of 6 credentials */}
+              {CERTIFICATIONS.slice(0, 6).map((cert) => (
                 <CertBadge
                   key={cert.id}
                   cert={cert}
@@ -462,6 +480,39 @@ export default function HomeView({ setCurrentView }) {
           ))}
         </div>
       </section>
+
+      {/* ─── CONDITIONAL MASTER CERTIFICATIONS DECK ─── */}
+      {CERTIFICATIONS.length > 6 && (
+        <section
+          id="all-certifications"
+          className="max-w-6xl mx-auto px-6 py-16 border-t border-gray-900 reveal text-left"
+        >
+          <div className="mb-10">
+            <p className="text-gray-500 font-mono text-xs tracking-widest uppercase mb-1">
+              // ARCHIVED_CREDENTIALS
+            </p>
+            <h2
+              className="text-2xl font-bold tracking-tight text-white"
+              style={{ fontFamily: "Space Grotesk, Inter, sans-serif" }}
+            >
+              Complete Registry Matrix
+            </h2>
+            <div className="mt-2 w-full h-0.5 bg-gray-900" />
+          </div>
+
+          {/* Renders a multi-column small grid for comprehensive item counts */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {CERTIFICATIONS.map((cert) => (
+              <div
+                key={cert.id}
+                className="bg-gray-900/10 border border-gray-900 hover:border-gray-800/80 rounded-xl p-4 transition-all duration-300 backdrop-blur-sm"
+              >
+                <CertBadge cert={cert} />
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* ─── FEATURED PROJECTS SECTION ─── */}
       <section className="py-16 border-t border-gray-900 reveal">
