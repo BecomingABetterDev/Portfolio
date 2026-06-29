@@ -43,88 +43,89 @@ The system coordinates application view states and asynchronous background pipel
 
 ## 📂 System Topology Structure
 
-+---backend # Node.js Express server core architecture
-| | .env # Isolated local environment execution variables (Git-ignored)
-| | .gitignore # Local rules excluding systemic dependencies from tracking
-| | package-lock.json # Locked dependency tree configuration manifest
-| | package.json # Backend script execution configurations & project manifest
-| | seedAdmin.js # Administrative credential cloud provisioner
-| | seedProjects.js # Local project configuration data collection seeder
-| | server.js # Primary application entry point & middleware orchestrator
-| |
-| +---config
-| | db.js # MongoDB Atlas cloud server connection logic via Mongoose
-| |
-| +---controllers
-| | authController.js # Handles stateless login requests, hashing, and token issuance
-| | messageController.js # Manages inbound recruiter telemetry payload workflows
-| | projectController.js # Manages full CRUD operations on database project vectors
-| |
-| +---middleware
-| | authMiddleware.js # Restricts access by intercepting and decoding JWT tokens
-| |
-| +---models
-| | Admin.js # Schema validation profile for authenticated user identity
-| | Message.js # Schema definition for system messaging telemetry data
-| | Project.js # Operational schema definition for portfolio items
-| |
-| \---routes
-| authRoutes.js # Route mapping for administrator verification pipelines
-| messageRoutes.js # Inbound communication router endpoints
-| projectRoutes.js # External and administrative data pipeline routes
+```
++---backend                             # Node.js Express server core architecture
+|   |   .env                            # Isolated local environment execution variables (Git-ignored)
+|   |   .gitignore                      # Local rules excluding systemic dependencies from tracking
+|   |   package-lock.json               # Locked dependency tree configuration manifest
+|   |   package.json                    # Backend script execution configurations & project manifest
+|   |   seedAdmin.js                    # Administrative credential cloud provisioner
+|   |   seedProjects.js                 # Local project configuration data collection seeder
+|   |   server.js                       # Primary application entry point & middleware orchestrator
+|   |
+|   +---config
+|   |       db.js                       # MongoDB Atlas cloud server connection logic via Mongoose
+|   |
+|   +---controllers
+|   |       authController.js           # Handles stateless login requests, hashing, and token issuance
+|   |       messageController.js        # Manages inbound recruiter telemetry payload workflows
+|   |       projectController.js        # Manages full CRUD operations on database project vectors
+|   |
+|   +---middleware
+|   |       authMiddleware.js           # Restricts access by intercepting and decoding JWT tokens
+|   |
+|   +---models
+|   |       Admin.js                    # Schema validation profile for authenticated user identity
+|   |       Message.js                  # Schema definition for system messaging telemetry data
+|   |       Project.js                  # Operational schema definition for portfolio items
+|   |
+|   \---routes
+|           authRoutes.js               # Route mapping for administrator verification pipelines
+|           messageRoutes.js            # Inbound communication router endpoints
+|           projectRoutes.js            # External and administrative data pipeline routes
 |
-\---frontend # Client single-page application root (Vite)
-| .gitignore # Client deployment system exclusions matrix
-| index.html # Core HTML layout shell where React app mounts
-| package-lock.json # Locked client-side package dependency architecture
-| package.json # Frontend node parameters, assets, and pipeline scripts
-| postcss.config.cjs # Engine configuration parsing global style variables
-| tailwind.config.cjs # Utility-first layout framework styling theme overrides
-| vite.config.js # React build pipeline, optimization configurations, & development proxies
-|  
- \---src
-| App.jsx # Root component managing application view-routing states
-| index.css # Global stylesheets importing system framework utilities
-| main.jsx # System entry point initializing virtual DOM render cycles
-|
-+---api
-| axiosInstance.js # Centralized HTTP request engine with dynamic environment base URLs
-|
-+---components
-| +---admin
-| | DeleteModal.jsx # Safe double-verification prompt for destructive file updates
-| | MessageList.jsx # Telemetry logging board displaying incoming message payloads
-| | ProjectForm.jsx # Unified dynamic dashboard form managing project creation/edits
-| |
-| +---layout
-| | Footer.jsx # Lower navigation wrapper housing brand legalities and handles
-| | Navbar.jsx # Header command terminal containing primary interface controls
-| |
-| \---ui
-| CertBadge.jsx # Micro-card component showcasing technical system credentials
-| ProjectCard.jsx # Extensible dashboard card visualizing active code assets
-| SectionHeading.jsx # Modular component asserting clear typographic layouts
-| SkillBadge.jsx # High-fidelity tech stack presentation component
-|
-+---context
-| AuthContext.jsx # Globally exposes user login state, persistence, and methods
-|
-+---data
-| staticData.js # Low-latency backup dataset used for offline layout fallback
-|
-+---hooks
-| useProjects.js # Custom asynchronous hook orchestrating server state tracking
-|
-+---utils
-| helpers.js # Reusable functional modules handling interface formatting
-|
-\---views
-AdminView.jsx # Locked gateway dashboard interface for administrative systems
-ContactView.jsx # Secure telemetry capture form for communication entries
-HomeView.jsx # Core dashboard layout displaying profile parameters
-ProjectsView.jsx # Complete project matrix tracking active systems
+\---frontend                            # Client single-page application root (Vite)
+    |   .gitignore                      # Client deployment system exclusions matrix
+    |   index.html                      # Core HTML layout shell where React app mounts
+    |   package-lock.json               # Locked client-side package dependency architecture
+    |   package.json                    # Frontend node parameters, assets, and pipeline scripts
+    |   postcss.config.cjs              # Engine configuration parsing global style variables
+    |   tailwind.config.cjs             # Utility-first layout framework styling theme overrides
+    |   vite.config.js                  # React build pipeline, optimization configurations, & development proxies
+    |
+    \---src
+        |   App.jsx                     # Root component managing application view-routing states
+        |   index.css                   # Global stylesheets importing system framework utilities
+        |   main.jsx                    # System entry point initializing virtual DOM render cycles
+        |
+        +---api
+        |       axiosInstance.js        # Centralized HTTP request engine with dynamic environment base URLs
+        |
+        +---components
+        |   +---admin
+        |   |       DeleteModal.jsx     # Safe double-verification prompt for destructive file updates
+        |   |       MessageList.jsx     # Telemetry logging board displaying incoming message payloads
+        |   |       ProjectForm.jsx     # Unified dynamic dashboard form managing project creation/edits
+        |   |
+        |   +---layout
+        |   |       Footer.jsx          # Lower navigation wrapper housing brand legalities and handles
+        |   |       Navbar.jsx          # Header command terminal containing primary interface controls
+        |   |
+        |   \---ui
+        |           CertBadge.jsx       # Micro-card component showcasing technical system credentials
+        |           ProjectCard.jsx     # Extensible dashboard card visualizing active code assets
+        |           SectionHeading.jsx  # Modular component asserting clear typographic layouts
+        |           SkillBadge.jsx      # High-fidelity tech stack presentation component
+        |
+        +---context
+        |       AuthContext.jsx         # Globally exposes user login state, persistence, and methods
+        |
+        +---data
+        |       staticData.js           # Low-latency backup dataset used for offline layout fallback
+        |
+        +---hooks
+        |       useProjects.js          # Custom asynchronous hook orchestrating server state tracking
+        |
+        +---utils
+        |       helpers.js              # Reusable functional modules handling interface formatting
+        |
+        \---views
+                AdminView.jsx           # Locked gateway dashboard interface for administrative systems
+                ContactView.jsx         # Secure telemetry capture form for communication entries
+                HomeView.jsx            # Core dashboard layout displaying profile parameters
+                ProjectsView.jsx        # Complete project matrix tracking active systems
 
-````
+```
 
 ### 🔐 Authentication Context
 
@@ -148,7 +149,8 @@ ProjectsView.jsx # Complete project matrix tracking active systems
 | **POST**   | `/api/messages`          | Public             | Submits a validated contact form submission payload container.                   |
 | **GET**    | `/api/messages`          | Required (**JWT**) | Retrieves stored feedback entries for administrator tracking and metrics review. |
 | **PATCH**  | `/api/messages/:id/read` | Required (**JWT**) | Toggles read states on target records.                                           |
-| **DELETE** | `/api/messages/:id`      | Required (**JWT**) | Drops an item record from the active messaging queue.
+| **DELETE** | `/api/messages/:id`      | Required (**JWT**) | Drops an item record from the active messaging queue.                            |
+
 ---
 
 ## ⚙️ Environment Profile Settings
@@ -166,7 +168,7 @@ JWT_SECRET=your_high_entropy_alphanumeric_jwt_signing_key
 TARGET_EMAIL=your_secure_admin_email
 TARGET_PASSWORD=your_secure_admin_password
 
-````
+```
 
 ### 💻 Frontend Variable Selection (`frontend/src/api/axiosInstance.js`)
 
