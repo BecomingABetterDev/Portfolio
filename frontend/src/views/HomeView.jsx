@@ -409,7 +409,7 @@ export default function HomeView({ setCurrentView }) {
                       .getElementById("all-certifications")
                       ?.scrollIntoView({ behavior: "smooth" });
                   }}
-                  className="text-gray-400 hover:text-gray-300 transition-colors font-mono tracking-normal text-[11px] lowercase normal-case"
+                  className="text-gray-400 hover:text-gray-300 transition-colors font-mono tracking-normal text-[11px] lowercase "
                 >
                   view_all({CERTIFICATIONS.length})
                 </a>
