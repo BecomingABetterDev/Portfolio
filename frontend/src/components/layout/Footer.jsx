@@ -78,16 +78,16 @@ export default function Footer({ setCurrentView }) {
           {/* Core Network Links */}
           <div className="flex items-center gap-4">
             <a
-              href="https://github.com/your-username"
+              href="https://github.com/BecomingABetterDev"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 bg-gray-900/30 hover:bg-gray-900 border border-gray-900 hover:border-gray-800 text-gray-400 hover:text-cyan-400 rounded-lg transition-all duration-200"
+              className="p-2 bg-gray-900/30 hover:bg-gray-900 border border-gray-900 hover:border-gray-800 text-gray-400 hover:text-gray-400 rounded-lg transition-all duration-200"
               aria-label="GitHub Repository Access"
             >
               <FiGithub size={14} />
             </a>
             <a
-              href="https://linkedin.com/in/your-username"
+              href="https://linkedin.com/in/eyob-desalegn-9686b0385"
               target="_blank"
               rel="noopener noreferrer"
               className="p-2 bg-gray-900/30 hover:bg-gray-900 border border-gray-900 hover:border-gray-800 text-gray-400 hover:text-gray-300 rounded-lg transition-all duration-200"
@@ -96,7 +96,7 @@ export default function Footer({ setCurrentView }) {
               <FiLinkedin size={14} />
             </a>
             <a
-              href="mailto:your-email@example.com"
+              href="mailto:becoming.a.dev7@gmail.com"
               className="p-2 bg-gray-900/30 hover:bg-gray-900 border border-gray-900 hover:border-gray-800 text-gray-400 hover:text-purple-500 rounded-lg transition-all duration-200"
               aria-label="Establish Direct SMTP Mail Connection"
             >

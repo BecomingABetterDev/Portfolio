@@ -185,3 +185,13 @@ select:focus {
 hr {
   border-color: #1f2937;
 }
+
+.blinking-cursor {
+  animation: blink 1s step-start infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
