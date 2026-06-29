@@ -1,39 +1,56 @@
-require('dotenv').config()
-const express = require('express')
-const cors = require('cors')
-const connectDB = require('./config/db')
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const connectDB = require("./config/db");
+const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
 
-const authRoutes = require('./routes/authRoutes')
-const projectRoutes = require('./routes/projectRoutes')
-const messageRoutes = require('./routes/messageRoutes')
+// Enable Helmet for global header security
 
-const app = express()
+// Apply rate limiting to login attempts only (to avoid blocking your own normal media uploads)
+const loginLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 5, // Limit each IP to 5 login requests per window
+    message: "Too many login attempts, please try again after 15 minutes",
+});
 
-connectDB()
+const authRoutes = require("./routes/authRoutes");
+const projectRoutes = require("./routes/projectRoutes");
+const messageRoutes = require("./routes/messageRoutes");
 
-app.use(cors({
-  origin: 'http://localhost:3000',
-  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}))
+const app = express();
+app.use("/api/auth/login", loginLimiter);
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
+connectDB();
+app.use(helmet());
 
-app.use('/api/auth', authRoutes)
-app.use('/api/projects', projectRoutes)
-app.use('/api/messages', messageRoutes)
+app.use(
+    cors({
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+        allowedHeaders: ["Content-Type", "Authorization"],
+    })
+);
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+app.use("/api/auth", authRoutes);
+app.use("/api/projects", projectRoutes);
+app.use("/api/messages", messageRoutes);
 
 app.use((req, res) => {
-  res.status(404).json({ message: 'Route not found.' })
-})
+    res.status(404).json({ message: "Route not found." });
+});
 
 app.use((err, req, res, next) => {
-  const statusCode = err.statusCode || 500
-  res.status(statusCode).json({ message: err.message || 'Internal server error.' })
-})
+    const statusCode = err.statusCode || 500;
+    res
+        .status(statusCode)
+        .json({ message: err.message || "Internal server error." });
+});
 
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
-})
+    console.log(`Server running on port ${PORT}`);
+});

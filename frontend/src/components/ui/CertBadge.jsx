@@ -2,7 +2,6 @@ import React from "react";
 import { FiAward, FiExternalLink } from "react-icons/fi";
 
 export default function CertBadge({ cert }) {
-  console.log(cert);
   return (
     <a
       href={cert.verificationUrl || "#"}
