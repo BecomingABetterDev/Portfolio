@@ -10,9 +10,9 @@ import {
 const STATUS_CONFIG = {
   Active: {
     icon: FiZap,
-    color: "text-cyan-400",
-    bg: "bg-cyan-400/10",
-    border: "border-cyan-400/30",
+    color: "text-gray-400",
+    bg: "bg-gray-400/10",
+    border: "border-gray-400/30",
   },
   Completed: {
     icon: FiCheckCircle,
@@ -38,14 +38,14 @@ export default function ProjectCard({ project, expanded = false }) {
 
   return (
     <article
-      className="bg-gray-800 border border-gray-700 rounded-lg p-6 hover:border-cyan-500 transition-all duration-300 card-lift flex flex-col justify-between"
+      className="bg-gray-800 border border-gray-700 rounded-lg p-6 hover:border-gray-500 transition-all duration-300 card-lift flex flex-col justify-between"
       data-project-id={project._id}
     >
       <div>
         {/* System Tag + Status */}
         <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
           <span
-            className="text-cyan-400 text-xs font-mono uppercase tracking-wider"
+            className="text-gray-400 text-xs font-mono uppercase tracking-wider"
             style={{ fontFamily: "JetBrains Mono, monospace" }}
           >
             {project.systemTag}
@@ -94,7 +94,7 @@ export default function ProjectCard({ project, expanded = false }) {
             {project.techStackTags.map((tag, i) => (
               <span
                 key={i}
-                className="text-xs font-mono text-cyan-300 bg-cyan-900/20 border border-cyan-700/30 px-2 py-1 rounded"
+                className="text-xs font-mono text-gray-300 bg-gray-900/20 border border-gray-700/30 px-2 py-1 rounded"
                 style={{ fontFamily: "JetBrains Mono, monospace" }}
               >
                 {tag}
@@ -107,8 +107,8 @@ export default function ProjectCard({ project, expanded = false }) {
         {expanded &&
           project.architectureHighlights &&
           project.architectureHighlights.length > 0 && (
-            <div className="mt-5 pt-5 border-t border-gray-700 mb-2">
-              <p className="text-gray-400 text-xs font-mono uppercase tracking-wider mb-3">
+            <div className="mt-5 pt-5 border-t border-gray-500 mb-2">
+              <p className="text-gray-200 text-xs font-mono uppercase tracking-wider mb-3">
                 Architecture Highlights
               </p>
               <ul className="space-y-2">
@@ -117,7 +117,7 @@ export default function ProjectCard({ project, expanded = false }) {
                     key={i}
                     className="flex items-start gap-2"
                   >
-                    <span className="text-cyan-400 mt-1.5 flex-shrink-0">
+                    <span className="text-gray-400 mt-1.5 flex-shrink-0">
                       <svg
                         width="4"
                         height="4"
@@ -148,7 +148,7 @@ export default function ProjectCard({ project, expanded = false }) {
             href={project.githubLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded text-xs font-mono uppercase tracking-wider text-cyan-400 border border-cyan-500/30 bg-cyan-500/5 hover:bg-cyan-500/10 hover:border-cyan-400 transition-all duration-200 focus:outline-none"
+            className="inline-flex items-center gap-2 px-3.5 py-2 rounded text-xs font-mono uppercase tracking-wider text-gray-400 border border-gray-500/30 bg-gray-500/5 hover:bg-gray-500/10 hover:border-gray-400 transition-all duration-200 focus:outline-none"
             style={{ fontFamily: "JetBrains Mono, monospace" }}
           >
             <FiGithub size={13} />

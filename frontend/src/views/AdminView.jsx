@@ -40,7 +40,13 @@ function LoginScreen({ onLogin }) {
       onLogin(res.data.token, res.data.admin.email);
       toast.success(`Welcome back, ${res.data.admin.email}`);
     } catch (err) {
-      const msg = err.response?.data?.message || "Login failed.";
+      // Tries to read the JSON object message first, drops back to raw string data, then uses general fallback
+      const msg =
+        err.response?.data?.message ||
+        (typeof err.response?.data === "string"
+          ? err.response.data
+          : "Gateway authorization failed.");
+
       toast.error(msg);
     } finally {
       setLoading(false);

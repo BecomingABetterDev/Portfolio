@@ -3,9 +3,8 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const Admin = require("./models/Admin"); // Adjust path if your models folder moved
 
-// The exact credentials from your README.md
-const TARGET_EMAIL = "admin@eyobdev.com";
-const TARGET_PASSWORD = "portfolio2024";
+const TARGET_EMAIL = process.env.TARGET_EMAIL;
+const TARGET_PASSWORD = process.env.TARGET_PASSWORD;
 
 async function seedAdmin() {
     try {
@@ -22,8 +21,8 @@ async function seedAdmin() {
         });
         console.log("📦 Connected to MongoDB successfully...");
 
-        // Clean up any old broken attempts with this email
-        await Admin.deleteOne({ email: TARGET_EMAIL.toLowerCase() });
+        // Clean up any admin
+        await Admin.deleteMany({});
 
         // Hash the password cleanly using bcrypt
         const salt = await bcrypt.genSalt(10);

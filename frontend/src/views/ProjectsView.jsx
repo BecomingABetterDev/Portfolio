@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import SectionHeading from "../components/ui/SectionHeading";
 import ProjectCard from "../components/ui/ProjectCard";
 import { useProjects } from "../hooks/useProjects";
@@ -24,7 +24,23 @@ function useRevealOnScroll() {
 export default function ProjectsView() {
   useRevealOnScroll();
   const { projects, loading } = useProjects();
+  const [showWakeUpNotice, setShowWakeUpNotice] = useState(false);
 
+  useEffect(() => {
+    let timer;
+    if (loading) {
+      // If system is loading, wait 4000ms (4 seconds) before displaying notice
+      timer = setTimeout(() => {
+        setShowWakeUpNotice(true);
+      }, 4000);
+    } else {
+      // Reset immediately when loading drops to false
+      setShowWakeUpNotice(false);
+    }
+
+    // Pro Cleanup: Prevents memory leaks and cancels timer if data loads quickly
+    return () => clearTimeout(timer);
+  }, [loading]);
   return (
     <div className="view-enter">
       <div className="max-w-6xl mx-auto px-6 py-16">
@@ -38,8 +54,21 @@ export default function ProjectsView() {
         {/* Main Projects Grid */}
         <div className="space-y-6 reveal">
           {loading ? (
-            <div className="flex items-center justify-center py-24">
-              <div className="w-8 h-8 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin" />
+            /* Changed to flex-col to keep the spinner centered when text appears */
+            <div className="flex flex-col items-center justify-center py-24 text-center">
+              {/* Spinner stays perfectly fixed in the center */}
+              <div className="w-8 h-8 border-2 border-gray-400 border-t-transparent rounded-full animate-spin" />
+
+              {/* Dynamic Wake-up Message — Only renders if server takes > 4 seconds */}
+              {showWakeUpNotice && (
+                <p className="text-gray-500 font-mono text-[11px] tracking-wide mt-5 max-w-xs mx-auto leading-relaxed uppercase transition-all duration-500 ease-in-out opacity-80">
+                  // establishing_cloud_link...
+                  <span className="block text-gray-600 lowercase text-[10px] tracking-normal mt-1 font-sans">
+                    Note: Free hosting nodes hibernate when idle. Initial
+                    wake-up sequence may require up to 30 seconds.
+                  </span>
+                </p>
+              )}
             </div>
           ) : (
             projects.map((project) => (
@@ -55,7 +84,7 @@ export default function ProjectsView() {
         {/* ─── PLAYGROUND SECTION ─── */}
         <section className="mt-24 pt-16 border-t border-gray-800 reveal">
           <div className="mb-10">
-            <p className="text-cyan-500 font-mono text-xs tracking-widest uppercase mb-2">
+            <p className="text-gray-500 font-mono text-xs tracking-widest uppercase mb-2">
               Experimental Builds
             </p>
             <h2
@@ -69,14 +98,14 @@ export default function ProjectsView() {
               pattern, or state architecture. Each one ended with a deliberate
               conclusion.
             </p>
-            <div className="mt-4 w-8 h-px bg-cyan-500" />
+            <div className="mt-4 w-8 h-px bg-gray-500" />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {PLAYGROUND_PROJECTS.map((p) => (
               <article
                 key={p.id}
-                className="bg-gray-800 border border-gray-700 rounded-lg p-5 flex flex-col justify-between min-h-[140px] hover:border-cyan-500 transition-all duration-300 card-lift"
+                className="bg-gray-800 border border-gray-700 rounded-lg p-5 flex flex-col justify-between min-h-[140px] hover:border-gray-500 transition-all duration-300 card-lift"
               >
                 <div>
                   <div className="flex items-start justify-between mb-3">
@@ -111,7 +140,7 @@ export default function ProjectsView() {
                       href={p.githubLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-1.5 rounded bg-gray-900/60 border border-gray-700/50 text-gray-400 hover:text-cyan-400 hover:border-cyan-500/30 transition-all duration-200 group focus:outline-none cursor-pointer"
+                      className="p-1.5 rounded bg-gray-900/60 border border-gray-700/50 text-gray-400 hover:text-gray-400 hover:border-gray-500/30 transition-all duration-200 group focus:outline-none cursor-pointer"
                       title="View Experimental Source Code"
                     >
                       <FiGithub
@@ -126,8 +155,8 @@ export default function ProjectsView() {
           </div>
 
           {/* Philosophy quote */}
-          <blockquote className="mt-12 relative border-l-2 border-cyan-500 pl-6">
-            <div className="absolute -left-1 top-0 w-2 h-2 rounded-full bg-cyan-500" />
+          <blockquote className="mt-12 relative border-l-2 border-gray-500 pl-6">
+            <div className="absolute -left-1 top-0 w-2 h-2 rounded-full bg-gray-500" />
             <p
               className="text-gray-300 text-base md:text-lg italic leading-relaxed"
               style={{ fontFamily: "Space Grotesk, Inter, sans-serif" }}
